@@ -35,105 +35,46 @@ export default function BookingPage() {
   const [selectedBarber, setSelectedBarber] = useState<number | null>(null);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    notes: "",
-  });
+  const [formData, setFormData] = useState({ name: "", phone: "", email: "", notes: "" });
 
   const toggleService = (id: number) => {
-    setSelectedServices((prev) =>
-      prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]
-    );
+    setSelectedServices((prev) => prev.includes(id) ? prev.filter((s) => s !== id) : [...prev, id]);
   };
 
-  const getTotalPrice = () => {
-    return selectedServices.reduce((total, id) => {
-      const service = services.find((s) => s.id === id);
-      return total + (service?.price || 0);
-    }, 0);
-  };
+  const getTotalPrice = () => selectedServices.reduce((total, id) => total + (services.find((s) => s.id === id)?.price || 0), 0);
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(price);
-  };
+  const formatPrice = (price: number) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(price);
 
-  const getMinDate = () => {
-    const today = new Date();
-    return today.toISOString().split("T")[0];
-  };
+  const getMinDate = () => new Date().toISOString().split("T")[0];
 
   const canProceed = () => {
     switch (step) {
-      case 1:
-        return selectedServices.length > 0;
-      case 2:
-        return selectedBarber !== null;
-      case 3:
-        return selectedDate !== "" && selectedTime !== "";
-      case 4:
-        return formData.name !== "" && formData.phone !== "";
-      default:
-        return false;
+      case 1: return selectedServices.length > 0;
+      case 2: return selectedBarber !== null;
+      case 3: return selectedDate !== "" && selectedTime !== "";
+      case 4: return formData.name !== "" && formData.phone !== "";
+      default: return false;
     }
   };
 
   const handleSubmit = () => {
-    const selectedServiceNames = selectedServices
-      .map((id) => services.find((s) => s.id === id)?.name)
-      .join(", ");
+    const selectedServiceNames = selectedServices.map((id) => services.find((s) => s.id === id)?.name).join(", ");
     const barberName = barbers.find((b) => b.id === selectedBarber)?.name;
-
-    const message = `Halo Gentleman's Cut! Saya ingin booking:
-
-Layanan: ${selectedServiceNames}
-Barber: ${barberName}
-Tanggal: ${selectedDate}
-Jam: ${selectedTime}
-Total: ${formatPrice(getTotalPrice())}
-
-Nama: ${formData.name}
-No. HP: ${formData.phone}
-Email: ${formData.email || "-"}
-Catatan: ${formData.notes || "-"}
-
-Mohon konfirmasi ketersediaan. Terima kasih!`;
-
-    const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, "_blank");
+    const message = `Halo Gentleman's Cut! Saya ingin booking:\n\nLayanan: ${selectedServiceNames}\nBarber: ${barberName}\nTanggal: ${selectedDate}\nJam: ${selectedTime}\nTotal: ${formatPrice(getTotalPrice())}\n\nNama: ${formData.name}\nNo. HP: ${formData.phone}\nEmail: ${formData.email || "-"}\nCatatan: ${formData.notes || "-"}\n\nMohon konfirmasi ketersediaan. Terima kasih!`;
+    window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(message)}`, "_blank");
   };
 
   return (
-    <div className="pt-20">
+    <>
       {/* Hero Section */}
-      <section className="bg-[#1A1A2E] py-16 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C9A962' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-            }}
-          />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1
-              className="text-5xl md:text-6xl font-bold text-white mb-4"
-              style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.05em" }}
-            >
+      <section className="bg-[#1A1A2E] pt-32 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
               BOOKING ONLINE
             </h1>
-            <div className="w-24 h-1 bg-[#C9A962] mx-auto mb-6" />
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            <div className="w-20 h-1 bg-[#C9A962] mx-auto mb-6" />
+            <p className="text-gray-300 max-w-xl mx-auto">
               Pilih layanan, barber, dan jadwal yang Anda inginkan
             </p>
           </motion.div>
@@ -141,82 +82,45 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
       </section>
 
       {/* Booking Form */}
-      <section className="py-16 bg-[#F5F5F5]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 md:py-16 bg-[#F5F5F5]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Progress Steps */}
-          <div className="flex items-center justify-center mb-12">
+          <div className="flex items-center justify-center mb-10">
             {[1, 2, 3, 4].map((s, index) => (
               <div key={s} className="flex items-center">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
-                    step >= s
-                      ? "bg-[#C9A962] text-[#1A1A2E]"
-                      : "bg-gray-300 text-gray-500"
-                  }`}
-                >
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm transition-colors ${step >= s ? "bg-[#C9A962] text-[#1A1A2E]" : "bg-gray-300 text-gray-500"}`}>
                   {step > s ? <Check className="w-5 h-5" /> : s}
                 </div>
-                {index < 3 && (
-                  <div
-                    className={`w-16 md:w-24 h-1 transition-all duration-300 ${
-                      step > s ? "bg-[#C9A962]" : "bg-gray-300"
-                    }`}
-                  />
-                )}
+                {index < 3 && <div className={`w-12 md:w-20 h-1 ${step > s ? "bg-[#C9A962]" : "bg-gray-300"}`} />}
               </div>
             ))}
           </div>
 
           {/* Step Content */}
-          <motion.div
-            key={step}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-white rounded-xl p-8 shadow-lg"
-          >
+          <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="bg-white rounded-xl p-6 md:p-8 shadow-md">
             {/* Step 1: Select Services */}
             {step === 1 && (
               <>
                 <div className="flex items-center gap-3 mb-6">
                   <Scissors className="w-6 h-6 text-[#C9A962]" />
-                  <h2
-                    className="text-2xl font-bold text-[#1A1A2E]"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.05em" }}
-                  >
-                    PILIH LAYANAN
-                  </h2>
+                  <h2 className="text-xl font-bold text-[#1A1A2E]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>PILIH LAYANAN</h2>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {services.map((service) => (
                     <button
                       key={service.id}
                       onClick={() => toggleService(service.id)}
-                      className={`p-4 rounded-lg border-2 text-left transition-all duration-300 ${
-                        selectedServices.includes(service.id)
-                          ? "border-[#C9A962] bg-[#C9A962]/10"
-                          : "border-gray-200 hover:border-[#C9A962]/50"
-                      }`}
+                      className={`p-4 rounded-lg border-2 text-left transition-colors ${selectedServices.includes(service.id) ? "border-[#C9A962] bg-[#C9A962]/10" : "border-gray-200 hover:border-[#C9A962]/50"}`}
                     >
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="font-bold text-[#1A1A2E]">{service.name}</h3>
-                          <p className="text-sm text-gray-500">{service.duration}</p>
+                          <h3 className="font-bold text-[#1A1A2E] text-sm">{service.name}</h3>
+                          <p className="text-xs text-gray-500">{service.duration}</p>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <span className="font-bold text-[#C9A962]">
-                            {formatPrice(service.price)}
-                          </span>
-                          <div
-                            className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
-                              selectedServices.includes(service.id)
-                                ? "border-[#C9A962] bg-[#C9A962]"
-                                : "border-gray-300"
-                            }`}
-                          >
-                            {selectedServices.includes(service.id) && (
-                              <Check className="w-4 h-4 text-white" />
-                            )}
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-[#C9A962] text-sm">{formatPrice(service.price)}</span>
+                          <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedServices.includes(service.id) ? "border-[#C9A962] bg-[#C9A962]" : "border-gray-300"}`}>
+                            {selectedServices.includes(service.id) && <Check className="w-3 h-3 text-white" />}
                           </div>
                         </div>
                       </div>
@@ -231,28 +135,19 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
               <>
                 <div className="flex items-center gap-3 mb-6">
                   <User className="w-6 h-6 text-[#C9A962]" />
-                  <h2
-                    className="text-2xl font-bold text-[#1A1A2E]"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.05em" }}
-                  >
-                    PILIH BARBER
-                  </h2>
+                  <h2 className="text-xl font-bold text-[#1A1A2E]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>PILIH BARBER</h2>
                 </div>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 gap-4">
                   {barbers.map((barber) => (
                     <button
                       key={barber.id}
                       onClick={() => setSelectedBarber(barber.id)}
-                      className={`p-6 rounded-lg border-2 text-center transition-all duration-300 ${
-                        selectedBarber === barber.id
-                          ? "border-[#C9A962] bg-[#C9A962]/10"
-                          : "border-gray-200 hover:border-[#C9A962]/50"
-                      }`}
+                      className={`p-5 rounded-lg border-2 text-center transition-colors ${selectedBarber === barber.id ? "border-[#C9A962] bg-[#C9A962]/10" : "border-gray-200 hover:border-[#C9A962]/50"}`}
                     >
-                      <div className="w-16 h-16 mx-auto rounded-full bg-[#1A1A2E] flex items-center justify-center text-2xl font-bold text-[#C9A962] mb-3" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
+                      <div className="w-14 h-14 mx-auto rounded-full bg-[#1A1A2E] flex items-center justify-center text-xl font-bold text-[#C9A962] mb-3" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>
                         {barber.name.split(" ").map((n) => n[0]).join("")}
                       </div>
-                      <h3 className="font-bold text-[#1A1A2E]">{barber.name}</h3>
+                      <h3 className="font-bold text-[#1A1A2E] text-sm">{barber.name}</h3>
                       <p className="text-xs text-gray-500">{barber.specialty}</p>
                     </button>
                   ))}
@@ -265,18 +160,11 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
               <>
                 <div className="flex items-center gap-3 mb-6">
                   <Calendar className="w-6 h-6 text-[#C9A962]" />
-                  <h2
-                    className="text-2xl font-bold text-[#1A1A2E]"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.05em" }}
-                  >
-                    PILIH JADWAL
-                  </h2>
+                  <h2 className="text-xl font-bold text-[#1A1A2E]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>PILIH JADWAL</h2>
                 </div>
-                <div className="space-y-6">
+                <div className="space-y-5">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Tanggal
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Tanggal</label>
                     <input
                       type="date"
                       min={getMinDate()}
@@ -286,19 +174,13 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Waktu
-                    </label>
-                    <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Waktu</label>
+                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
                       {timeSlots.map((time) => (
                         <button
                           key={time}
                           onClick={() => setSelectedTime(time)}
-                          className={`p-2 rounded-lg border-2 text-sm font-medium transition-all duration-300 ${
-                            selectedTime === time
-                              ? "border-[#C9A962] bg-[#C9A962] text-[#1A1A2E]"
-                              : "border-gray-200 hover:border-[#C9A962]/50"
-                          }`}
+                          className={`p-2 rounded-lg border-2 text-sm font-medium transition-colors ${selectedTime === time ? "border-[#C9A962] bg-[#C9A962] text-[#1A1A2E]" : "border-gray-200 hover:border-[#C9A962]/50"}`}
                         >
                           {time}
                         </button>
@@ -314,18 +196,11 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
               <>
                 <div className="flex items-center gap-3 mb-6">
                   <Phone className="w-6 h-6 text-[#C9A962]" />
-                  <h2
-                    className="text-2xl font-bold text-[#1A1A2E]"
-                    style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.05em" }}
-                  >
-                    DATA DIRI
-                  </h2>
+                  <h2 className="text-xl font-bold text-[#1A1A2E]" style={{ fontFamily: "'Bebas Neue', sans-serif" }}>DATA DIRI</h2>
                 </div>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Nama Lengkap *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Nama Lengkap *</label>
                     <input
                       type="text"
                       value={formData.name}
@@ -335,9 +210,7 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      No. WhatsApp *
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">No. WhatsApp *</label>
                     <input
                       type="tel"
                       value={formData.phone}
@@ -347,9 +220,7 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Email (opsional)
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Email (opsional)</label>
                     <input
                       type="email"
                       value={formData.email}
@@ -359,50 +230,27 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Catatan (opsional)
-                    </label>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Catatan (opsional)</label>
                     <textarea
                       value={formData.notes}
                       onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                       className="w-full p-3 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none"
                       rows={3}
-                      placeholder="Misalnya: minta potong model tertentu"
+                      placeholder="Catatan tambahan..."
                     />
                   </div>
                 </div>
 
                 {/* Summary */}
-                <div className="mt-8 p-6 bg-[#F5F5F5] rounded-lg">
-                  <h3 className="font-bold text-[#1A1A2E] mb-4">Ringkasan Booking</h3>
+                <div className="mt-6 p-5 bg-[#F5F5F5] rounded-lg">
+                  <h3 className="font-bold text-[#1A1A2E] mb-4 text-sm">Ringkasan Booking</h3>
                   <div className="space-y-2 text-sm">
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Layanan:</span>
-                      <span className="font-medium">
-                        {selectedServices
-                          .map((id) => services.find((s) => s.id === id)?.name)
-                          .join(", ")}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Barber:</span>
-                      <span className="font-medium">
-                        {barbers.find((b) => b.id === selectedBarber)?.name}
-                      </span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Tanggal:</span>
-                      <span className="font-medium">{selectedDate}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-600">Waktu:</span>
-                      <span className="font-medium">{selectedTime}</span>
-                    </div>
+                    <div className="flex justify-between"><span className="text-gray-600">Layanan:</span><span className="font-medium text-right">{selectedServices.map((id) => services.find((s) => s.id === id)?.name).join(", ")}</span></div>
+                    <div className="flex justify-between"><span className="text-gray-600">Barber:</span><span className="font-medium">{barbers.find((b) => b.id === selectedBarber)?.name}</span></div>
+                    <div className="flex justify-between"><span className="text-gray-600">Tanggal:</span><span className="font-medium">{selectedDate}</span></div>
+                    <div className="flex justify-between"><span className="text-gray-600">Waktu:</span><span className="font-medium">{selectedTime}</span></div>
                     <div className="border-t border-gray-300 pt-2 mt-2">
-                      <div className="flex justify-between text-lg font-bold">
-                        <span>Total:</span>
-                        <span className="text-[#C9A962]">{formatPrice(getTotalPrice())}</span>
-                      </div>
+                      <div className="flex justify-between font-bold text-base"><span>Total:</span><span className="text-[#C9A962]">{formatPrice(getTotalPrice())}</span></div>
                     </div>
                   </div>
                 </div>
@@ -412,10 +260,7 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
             {/* Navigation Buttons */}
             <div className="flex justify-between mt-8">
               {step > 1 && (
-                <button
-                  onClick={() => setStep(step - 1)}
-                  className="px-6 py-3 border-2 border-[#1A1A2E] text-[#1A1A2E] rounded-lg font-bold hover:bg-[#1A1A2E] hover:text-white transition-colors duration-300"
-                >
+                <button onClick={() => setStep(step - 1)} className="px-5 py-2.5 border-2 border-[#1A1A2E] text-[#1A1A2E] rounded-lg font-bold text-sm hover:bg-[#1A1A2E] hover:text-white transition-colors">
                   Kembali
                 </button>
               )}
@@ -424,27 +269,17 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
                   <button
                     onClick={() => setStep(step + 1)}
                     disabled={!canProceed()}
-                    className={`px-6 py-3 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 ${
-                      canProceed()
-                        ? "bg-[#C9A962] text-[#1A1A2E] hover:bg-[#b8983e]"
-                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    }`}
+                    className={`px-5 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 transition-colors ${canProceed() ? "bg-[#C9A962] text-[#1A1A2E] hover:bg-[#b8983e]" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
                   >
-                    Lanjut
-                    <ChevronRight className="w-5 h-5" />
+                    Lanjut <ChevronRight className="w-4 h-4" />
                   </button>
                 ) : (
                   <button
                     onClick={handleSubmit}
                     disabled={!canProceed()}
-                    className={`px-8 py-3 rounded-lg font-bold flex items-center gap-2 transition-all duration-300 ${
-                      canProceed()
-                        ? "bg-[#C9A962] text-[#1A1A2E] hover:bg-[#b8983e]"
-                        : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                    }`}
+                    className={`px-6 py-2.5 rounded-lg font-bold text-sm flex items-center gap-2 transition-colors ${canProceed() ? "bg-[#C9A962] text-[#1A1A2E] hover:bg-[#b8983e]" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
                   >
-                    <Phone className="w-5 h-5" />
-                    Booking via WhatsApp
+                    <Phone className="w-4 h-4" /> Booking via WhatsApp
                   </button>
                 )}
               </div>
@@ -452,6 +287,6 @@ Mohon konfirmasi ketersediaan. Terima kasih!`;
           </motion.div>
         </div>
       </section>
-    </div>
+    </>
   );
 }

@@ -7,11 +7,6 @@ export const metadata: Metadata = {
   title: "Gentleman's Cut | Barbershop Premium Jakarta | Booking Online",
   description: "Barbershop premium dengan barber berpengalaman. Haircut, shaving, grooming. Booking online, membership tersedia.",
   keywords: "barbershop jakarta, barbershop premium, potong rambut pria, haircut jakarta, grooming pria",
-  openGraph: {
-    title: "Gentleman's Cut | Barbershop Premium Jakarta",
-    description: "Barbershop premium dengan barber berpengalaman. Haircut, shaving, grooming terbaik.",
-    type: "website",
-  },
 };
 
 export default function RootLayout({
@@ -21,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id">
-      <body className="antialiased">
+      <body>
         <Navbar />
         <main>{children}</main>
         <Footer />

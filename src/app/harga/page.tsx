@@ -1,72 +1,89 @@
 import Link from "next/link";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const plans = [
   {
     name: "Silver",
-    price: "200K",
-    features: ["2 Haircuts/bulan", "10% off", "Priority booking"],
+    price: "200.000",
+    features: ["2 Haircuts / bulan", "10% off semua layanan", "Priority booking"],
   },
   {
     name: "Gold",
-    price: "350K",
+    price: "350.000",
     popular: true,
-    features: ["4 Haircuts/bulan", "1 Free shave", "15% off", "Free products"],
+    features: ["4 Haircuts / bulan", "1 Free shave / bulan", "15% off semua layanan", "Free styling products"],
   },
   {
     name: "Platinum",
-    price: "500K",
-    features: ["Unlimited cuts", "2 Free shaves", "20% off", "VIP access"],
+    price: "500.000",
+    features: ["Unlimited haircuts", "2 Free shaves / bulan", "20% off semua layanan", "VIP lounge access"],
   },
 ];
 
-const prices = [
+const services = [
   { name: "Classic Haircut", price: "75.000" },
   { name: "Premium Haircut", price: "120.000" },
   { name: "Classic Shave", price: "50.000" },
   { name: "Hot Towel Shave", price: "100.000" },
+  { name: "Beard Grooming", price: "80.000" },
   { name: "Hair Coloring", price: "150.000" },
   { name: "Kids Haircut", price: "50.000" },
-  { name: "Beard Grooming", price: "80.000" },
   { name: "Hair Treatment", price: "200.000" },
 ];
 
 export default function HargaPage() {
   return (
-    <div className="pt-14">
-      <section className="py-16">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <p className="text-[#C9A962] text-sm tracking-widest mb-2">HARGA</p>
-            <h1 className="text-4xl font-bold mb-4">Pricing</h1>
-            <p className="text-white/60">Harga transparan tanpa biaya tersembunyi.</p>
+    <>
+      <Header />
+
+      <section className="pt-16 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-6 py-24">
+          <div className="max-w-2xl mb-16">
+            <p className="text-[#d4af37] text-sm tracking-[0.2em] mb-4">HARGA</p>
+            <h1 className="text-5xl font-bold mb-6">Pricing</h1>
+            <p className="text-[#888] text-lg">Harga transparan tanpa biaya tersembunyi.</p>
           </div>
 
           {/* Membership */}
-          <div className="mb-16">
-            <h2 className="text-xl font-bold mb-6 text-center">Membership Plans</h2>
-            <div className="grid md:grid-cols-3 gap-4">
-              {plans.map((p) => (
+          <div className="mb-24">
+            <h2 className="text-2xl font-bold mb-10">Membership Plans</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {plans.map((plan) => (
                 <div
-                  key={p.name}
-                  className={`p-6 text-center ${p.popular ? "bg-[#C9A962] text-black" : "bg-white/5"}`}
+                  key={plan.name}
+                  className={`p-8 ${
+                    plan.popular
+                      ? "bg-[#d4af37] text-black"
+                      : "bg-[#111] border border-[#222]"
+                  }`}
                 >
-                  {p.popular && <p className="text-xs font-bold mb-2">POPULAR</p>}
-                  <h3 className="text-lg font-bold">{p.name}</h3>
-                  <p className="text-3xl font-bold my-3">
-                    Rp {p.price}<span className="text-sm font-normal">/bln</span>
-                  </p>
-                  <ul className={`text-sm space-y-2 mb-4 ${p.popular ? "text-black/70" : "text-white/60"}`}>
-                    {p.features.map((f) => (
-                      <li key={f}>✓ {f}</li>
+                  {plan.popular && (
+                    <p className="text-xs font-bold tracking-[0.2em] mb-4">MOST POPULAR</p>
+                  )}
+                  <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                  <div className="flex items-baseline gap-1 mb-8">
+                    <span className="text-sm">Rp</span>
+                    <span className="text-4xl font-bold">{plan.price}</span>
+                    <span className={plan.popular ? "text-black/60" : "text-[#666]"}>/bulan</span>
+                  </div>
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((f) => (
+                      <li key={f} className={`flex items-center gap-3 ${plan.popular ? "text-black/80" : "text-[#888]"}`}>
+                        <span className={plan.popular ? "text-black" : "text-[#d4af37]"}>✓</span>
+                        {f}
+                      </li>
                     ))}
                   </ul>
                   <Link
                     href="/booking"
-                    className={`block py-2 font-medium ${
-                      p.popular ? "bg-black text-white" : "bg-[#C9A962] text-black"
+                    className={`block text-center font-semibold py-4 text-sm ${
+                      plan.popular
+                        ? "bg-black text-white"
+                        : "bg-[#d4af37] text-black"
                     }`}
                   >
-                    Join
+                    JOIN NOW
                   </Link>
                 </div>
               ))}
@@ -75,18 +92,30 @@ export default function HargaPage() {
 
           {/* Price List */}
           <div>
-            <h2 className="text-xl font-bold mb-6 text-center">Service Prices</h2>
-            <div className="grid md:grid-cols-2 gap-3">
-              {prices.map((p) => (
-                <div key={p.name} className="bg-white/5 p-4 flex justify-between">
-                  <span>{p.name}</span>
-                  <span className="text-[#C9A962] font-bold">Rp {p.price}</span>
+            <h2 className="text-2xl font-bold mb-10">Service Prices</h2>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {services.map((s) => (
+                <div key={s.name} className="bg-[#111] border border-[#222] p-6 flex justify-between items-center">
+                  <span className="text-white">{s.name}</span>
+                  <span className="text-[#d4af37] font-bold text-lg">Rp {s.price}</span>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </section>
-    </div>
+
+      <section className="bg-[#d4af37]">
+        <div className="max-w-7xl mx-auto px-6 py-16 text-center">
+          <h2 className="text-2xl font-bold text-black mb-4">Ready to Book?</h2>
+          <p className="text-black/70 mb-8">Jadwalkan appointment Anda sekarang.</p>
+          <Link href="/booking" className="inline-block bg-black text-white font-semibold px-8 py-3 text-sm">
+            BOOK APPOINTMENT
+          </Link>
+        </div>
+      </section>
+
+      <Footer />
+    </>
   );
 }

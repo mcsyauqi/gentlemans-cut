@@ -1,59 +1,68 @@
 "use client";
 
 import { useState } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+
+const categories = ["All", "Haircuts", "Shaves", "Shop"];
 
 const images = [
-  { id: 1, cat: "Haircut", title: "Classic Taper" },
-  { id: 2, cat: "Shave", title: "Hot Towel Shave" },
-  { id: 3, cat: "Shop", title: "Our Space" },
-  { id: 4, cat: "Haircut", title: "Modern Fade" },
-  { id: 5, cat: "Style", title: "Pomade Finish" },
-  { id: 6, cat: "Haircut", title: "Textured Crop" },
-  { id: 7, cat: "Shop", title: "Waiting Area" },
-  { id: 8, cat: "Shave", title: "Beard Trim" },
+  { id: 1, cat: "Haircuts", title: "Classic Taper" },
+  { id: 2, cat: "Haircuts", title: "Modern Fade" },
+  { id: 3, cat: "Haircuts", title: "Textured Crop" },
+  { id: 4, cat: "Haircuts", title: "Skin Fade" },
+  { id: 5, cat: "Shaves", title: "Hot Towel Shave" },
+  { id: 6, cat: "Shaves", title: "Beard Trim" },
+  { id: 7, cat: "Shop", title: "Our Space" },
+  { id: 8, cat: "Shop", title: "Barber Station" },
 ];
-
-const cats = ["All", "Haircut", "Shave", "Style", "Shop"];
 
 export default function GaleriPage() {
   const [filter, setFilter] = useState("All");
-  const filtered = filter === "All" ? images : images.filter((i) => i.cat === filter);
+
+  const filtered = filter === "All" ? images : images.filter((img) => img.cat === filter);
 
   return (
-    <div className="pt-14">
-      <section className="py-16">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <p className="text-[#C9A962] text-sm tracking-widest mb-2">PORTFOLIO</p>
-            <h1 className="text-4xl font-bold mb-4">Gallery</h1>
-            <p className="text-white/60">Showcase karya terbaik kami.</p>
+    <>
+      <Header />
+
+      <section className="pt-16 bg-[#0a0a0a]">
+        <div className="max-w-7xl mx-auto px-6 py-24">
+          <div className="max-w-2xl mb-12">
+            <p className="text-[#d4af37] text-sm tracking-[0.2em] mb-4">PORTFOLIO</p>
+            <h1 className="text-5xl font-bold mb-6">Our Gallery</h1>
+            <p className="text-[#888] text-lg">Showcase karya terbaik kami.</p>
           </div>
 
-          <div className="flex justify-center gap-2 mb-8 flex-wrap">
-            {cats.map((c) => (
+          <div className="flex gap-4 mb-12">
+            {categories.map((cat) => (
               <button
-                key={c}
-                onClick={() => setFilter(c)}
-                className={`px-4 py-2 text-sm ${
-                  filter === c ? "bg-[#C9A962] text-black" : "bg-white/5 text-white/60"
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-6 py-3 text-sm font-semibold transition-colors ${
+                  filter === cat
+                    ? "bg-[#d4af37] text-black"
+                    : "bg-[#111] border border-[#222] text-[#888] hover:border-[#d4af37]"
                 }`}
               >
-                {c}
+                {cat}
               </button>
             ))}
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
             {filtered.map((img) => (
-              <div key={img.id} className="aspect-square bg-white/5 flex flex-col items-center justify-center p-4">
-                <span className="text-3xl font-bold text-white/10 mb-2">{img.id.toString().padStart(2, "0")}</span>
-                <p className="text-sm font-medium">{img.title}</p>
-                <p className="text-[#C9A962] text-xs">{img.cat}</p>
+              <div key={img.id} className="aspect-square bg-[#111] border border-[#222] flex flex-col items-center justify-center p-6 hover:border-[#d4af37] transition-colors cursor-pointer group">
+                <p className="text-4xl font-bold text-[#1a1a1a] group-hover:text-[#222] mb-4">{String(img.id).padStart(2, "0")}</p>
+                <p className="text-white font-semibold mb-1">{img.title}</p>
+                <p className="text-[#d4af37] text-sm">{img.cat}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
-    </div>
+
+      <Footer />
+    </>
   );
 }

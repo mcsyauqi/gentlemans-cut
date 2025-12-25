@@ -1,25 +1,14 @@
-import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
-export const metadata: Metadata = {
-  title: "Gentleman's Cut - Premium Barbershop Jakarta",
+export const metadata = {
+  title: "Gentleman's Cut - Premium Barbershop",
   description: "Premium barbershop untuk pria modern. Gaya Pria Sejati.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id">
-      <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

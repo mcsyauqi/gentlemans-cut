@@ -1,117 +1,178 @@
 "use client";
 
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { MapPin, Phone, Mail, Clock, Instagram, MessageCircle } from "lucide-react";
-import Link from "next/link";
 
 export default function KontakPage() {
   return (
     <>
-      <section className="pt-32 pb-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
-            <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">Get In Touch</p>
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Contact Us</h1>
-            <p className="text-white/60 text-lg">Have questions? We're here to help. Reach out to us anytime.</p>
+      {/* Header */}
+      <section className="pt-24 pb-12">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-xl"
+          >
+            <p className="text-gold text-sm tracking-widest mb-2">HUBUNGI KAMI</p>
+            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
+              Contact Us
+            </h1>
+            <p className="text-white/60">
+              Ada pertanyaan? Kami siap membantu. Hubungi kami kapan saja.
+            </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="pb-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid lg:grid-cols-2 gap-12">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="bg-neutral-900 p-8 md:p-12">
-                <h2 className="text-2xl font-display font-bold mb-8">Send Us a Message</h2>
-                <form className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-6">
+      {/* Content */}
+      <section className="pb-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Contact Form */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="bg-dark-card p-6 md:p-8">
+                <h2 className="text-xl font-display font-bold mb-6">Kirim Pesan</h2>
+
+                <form className="space-y-4">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Name</label>
-                      <input type="text" className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none" placeholder="Your name" />
+                      <label className="block text-white/60 text-sm mb-2">Nama</label>
+                      <input
+                        type="text"
+                        className="w-full bg-dark-lighter border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none"
+                        placeholder="Nama Anda"
+                      />
                     </div>
                     <div>
-                      <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Phone</label>
-                      <input type="tel" className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none" placeholder="08xxxxxxxxxx" />
+                      <label className="block text-white/60 text-sm mb-2">Telepon</label>
+                      <input
+                        type="tel"
+                        className="w-full bg-dark-lighter border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none"
+                        placeholder="08xxxxxxxxxx"
+                      />
                     </div>
                   </div>
+
                   <div>
-                    <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Email</label>
-                    <input type="email" className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none" placeholder="your@email.com" />
+                    <label className="block text-white/60 text-sm mb-2">Email</label>
+                    <input
+                      type="email"
+                      className="w-full bg-dark-lighter border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none"
+                      placeholder="email@contoh.com"
+                    />
                   </div>
+
                   <div>
-                    <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Subject</label>
-                    <select className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none">
-                      <option value="">Select a subject</option>
+                    <label className="block text-white/60 text-sm mb-2">Subject</label>
+                    <select className="w-full bg-dark-lighter border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none">
+                      <option value="">Pilih subject</option>
                       <option value="booking">Booking Inquiry</option>
                       <option value="membership">Membership</option>
                       <option value="career">Career Opportunity</option>
                       <option value="feedback">Feedback</option>
-                      <option value="other">Other</option>
+                      <option value="other">Lainnya</option>
                     </select>
                   </div>
+
                   <div>
-                    <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Message</label>
-                    <textarea rows={5} className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none resize-none" placeholder="Your message..."></textarea>
+                    <label className="block text-white/60 text-sm mb-2">Pesan</label>
+                    <textarea
+                      rows={4}
+                      className="w-full bg-dark-lighter border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none resize-none"
+                      placeholder="Pesan Anda..."
+                    />
                   </div>
-                  <button type="submit" className="w-full bg-gold text-black py-4 font-semibold uppercase tracking-wider hover:bg-white transition-colors">
-                    Send Message
+
+                  <button
+                    type="submit"
+                    className="w-full bg-gold text-dark py-3 font-semibold hover:bg-gold-light transition-colors"
+                  >
+                    Kirim Pesan
                   </button>
                 </form>
               </div>
             </motion.div>
 
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-8">
+            {/* Info */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-6"
+            >
+              {/* Map */}
+              <div className="aspect-video bg-dark-lighter flex items-center justify-center">
+                <p className="text-white/20 text-sm tracking-widest">MAP LOCATION</p>
+              </div>
+
+              {/* Info Cards */}
+              <div className="grid gap-3">
+                <div className="flex items-start gap-4 bg-dark-card p-4">
+                  <MapPin className="text-gold mt-1 flex-shrink-0" size={20} />
+                  <div>
+                    <p className="font-semibold mb-1">Alamat</p>
+                    <p className="text-white/60 text-sm">
+                      Jl. Sudirman No. 123
+                      <br />
+                      Jakarta Pusat 10220
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-dark-card p-4">
+                  <Clock className="text-gold mt-1 flex-shrink-0" size={20} />
+                  <div>
+                    <p className="font-semibold mb-1">Jam Buka</p>
+                    <p className="text-white/60 text-sm">
+                      Senin - Minggu
+                      <br />
+                      10:00 - 21:00
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-dark-card p-4">
+                  <Phone className="text-gold mt-1 flex-shrink-0" size={20} />
+                  <div>
+                    <p className="font-semibold mb-1">Telepon</p>
+                    <p className="text-white/60 text-sm">+62 21 1234 5678</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-dark-card p-4">
+                  <Mail className="text-gold mt-1 flex-shrink-0" size={20} />
+                  <div>
+                    <p className="font-semibold mb-1">Email</p>
+                    <p className="text-white/60 text-sm">info@gentlemanscut.id</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Social */}
               <div>
-                <h2 className="text-2xl font-display font-bold mb-8">Visit Our Shop</h2>
-                <div className="aspect-video bg-neutral-800 relative mb-8">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <p className="text-white/20 uppercase tracking-widest text-sm">Map Location</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="grid gap-6">
-                <div className="flex items-start gap-4 p-6 bg-neutral-900">
-                  <MapPin className="text-gold mt-1 flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-1">Address</h3>
-                    <p className="text-white/60">Jl. Sudirman No. 123<br />Jakarta Pusat 10220</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-6 bg-neutral-900">
-                  <Clock className="text-gold mt-1 flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-1">Opening Hours</h3>
-                    <p className="text-white/60">Monday - Sunday<br />10:00 - 21:00</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-6 bg-neutral-900">
-                  <Phone className="text-gold mt-1 flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-1">Phone</h3>
-                    <p className="text-white/60">+62 21 1234 5678</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 p-6 bg-neutral-900">
-                  <Mail className="text-gold mt-1 flex-shrink-0" size={24} />
-                  <div>
-                    <h3 className="font-semibold mb-1">Email</h3>
-                    <p className="text-white/60">info@gentlemanscut.id</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="pt-4">
-                <h3 className="font-semibold mb-4">Follow Us</h3>
-                <div className="flex gap-4">
-                  <a href="https://instagram.com/gentlemanscut" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-neutral-900 flex items-center justify-center text-white/60 hover:text-gold hover:bg-neutral-800 transition-colors">
-                    <Instagram size={20} />
+                <p className="font-semibold mb-3">Follow Us</p>
+                <div className="flex gap-3">
+                  <a
+                    href="https://instagram.com/gentlemanscut"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-dark-card flex items-center justify-center text-white/60 hover:text-gold hover:bg-dark-lighter transition-colors"
+                  >
+                    <Instagram size={18} />
                   </a>
-                  <a href="https://wa.me/6221123456789" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-neutral-900 flex items-center justify-center text-white/60 hover:text-gold hover:bg-neutral-800 transition-colors">
-                    <MessageCircle size={20} />
+                  <a
+                    href="https://wa.me/6221123456789"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 bg-dark-card flex items-center justify-center text-white/60 hover:text-gold hover:bg-dark-lighter transition-colors"
+                  >
+                    <MessageCircle size={18} />
                   </a>
                 </div>
               </div>
@@ -120,11 +181,19 @@ export default function KontakPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-gold">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-black mb-4">Prefer to Book Directly?</h2>
-          <p className="text-black/70 mb-8 max-w-md mx-auto">Skip the form and book your appointment instantly through our booking system.</p>
-          <Link href="/booking" className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-semibold uppercase tracking-wider hover:bg-neutral-800 transition-colors">
+      {/* CTA */}
+      <section className="py-12 bg-gold">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-dark mb-4">
+            Prefer to Book Directly?
+          </h2>
+          <p className="text-dark/70 mb-6 max-w-md mx-auto">
+            Skip the form and book your appointment instantly.
+          </p>
+          <Link
+            href="/booking"
+            className="bg-dark text-white px-6 py-3 font-semibold inline-block hover:bg-dark-light transition-colors"
+          >
             Book Now
           </Link>
         </div>

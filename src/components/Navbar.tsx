@@ -4,56 +4,83 @@ import { useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
-const links = [
+const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/layanan", label: "Services" },
-  { href: "/barber", label: "Our Team" },
-  { href: "/galeri", label: "Gallery" },
-  { href: "/harga", label: "Pricing" },
-  { href: "/kontak", label: "Contact" },
+  { href: "/layanan", label: "Layanan" },
+  { href: "/barber", label: "Barber" },
+  { href: "/galeri", label: "Galeri" },
+  { href: "/harga", label: "Harga" },
+  { href: "/kontak", label: "Kontak" },
 ];
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
-      <div className="bg-black/80 backdrop-blur-md border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <Link href="/" className="flex flex-col">
-            <span className="text-2xl font-display font-bold text-gold tracking-wide">GENTLEMAN'S</span>
-            <span className="text-xs tracking-[0.3em] text-white/60 -mt-1">CUT BARBERSHOP</span>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-dark/90 backdrop-blur-md border-b border-white/10">
+      <div className="max-w-6xl mx-auto px-4">
+        <div className="h-16 flex items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex flex-col leading-none">
+            <span className="text-xl font-display font-bold text-gold tracking-wide">
+              GENTLEMAN'S
+            </span>
+            <span className="text-[10px] tracking-[0.2em] text-white/50">
+              CUT BARBERSHOP
+            </span>
           </Link>
 
-          <nav className="hidden lg:flex items-center gap-8">
-            {links.map((link) => (
-              <Link key={link.href} href={link.href} className="text-sm text-white/70 hover:text-gold transition-colors uppercase tracking-wider">
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-sm text-white/70 hover:text-gold transition-colors"
+              >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          <div className="hidden lg:block">
-            <Link href="/booking" className="bg-gold text-black px-6 py-3 text-sm font-semibold uppercase tracking-wider hover:bg-white transition-colors">
-              Book Now
-            </Link>
-          </div>
+          {/* Desktop CTA */}
+          <Link
+            href="/booking"
+            className="hidden lg:block bg-gold text-dark px-5 py-2 text-sm font-semibold hover:bg-gold-light transition-colors"
+          >
+            Book Now
+          </Link>
 
-          <button className="lg:hidden text-white" onClick={() => setOpen(!open)}>
-            {open ? <X size={24} /> : <Menu size={24} />}
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="lg:hidden text-white p-2"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {open && (
-        <div className="lg:hidden bg-black/95 backdrop-blur-md border-b border-white/10">
-          <nav className="px-6 py-6 flex flex-col gap-4">
-            {links.map((link) => (
-              <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="text-white/70 hover:text-gold py-2 uppercase tracking-wider text-sm">
+      {/* Mobile Menu */}
+      {isOpen && (
+        <div className="lg:hidden bg-dark border-t border-white/10">
+          <nav className="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsOpen(false)}
+                className="text-white/70 hover:text-gold py-2 transition-colors"
+              >
                 {link.label}
               </Link>
             ))}
-            <Link href="/booking" onClick={() => setOpen(false)} className="bg-gold text-black px-6 py-3 text-sm font-semibold uppercase tracking-wider text-center mt-4">
+            <Link
+              href="/booking"
+              onClick={() => setIsOpen(false)}
+              className="bg-gold text-dark px-5 py-3 text-sm font-semibold text-center mt-2"
+            >
               Book Now
             </Link>
           </nav>

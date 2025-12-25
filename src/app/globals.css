@@ -1,6 +1,21 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
+@theme {
+  /* Colors */
+  --color-gold: #C9A962;
+  --color-gold-light: #D4B872;
+  --color-gold-dark: #B89952;
+  --color-dark: #0A0A0A;
+  --color-dark-light: #141414;
+  --color-dark-lighter: #1E1E1E;
+  --color-dark-card: #161616;
+
+  /* Fonts - Using system font stacks */
+  --font-display: Georgia, "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Base styles */
 * {
   margin: 0;
   padding: 0;
@@ -12,56 +27,123 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
-  background: #0D0D0D;
+  font-family: var(--font-body);
+  background-color: var(--color-dark);
   color: #FAFAFA;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* Custom utility classes */
 .font-display {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
 }
 
 .text-gold {
-  color: #D4AF37;
+  color: var(--color-gold);
 }
 
 .bg-gold {
-  background-color: #D4AF37;
+  background-color: var(--color-gold);
 }
 
 .border-gold {
-  border-color: #D4AF37;
+  border-color: var(--color-gold);
 }
 
-.gradient-gold {
-  background: linear-gradient(135deg, #D4AF37 0%, #F4E4BC 50%, #D4AF37 100%);
-  background-size: 200% 200%;
-  animation: gradient 5s ease infinite;
+.bg-dark {
+  background-color: var(--color-dark);
 }
 
-@keyframes gradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.bg-dark-light {
+  background-color: var(--color-dark-light);
 }
 
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.bg-dark-lighter {
+  background-color: var(--color-dark-lighter);
 }
 
+.bg-dark-card {
+  background-color: var(--color-dark-card);
+}
+
+/* Hover states */
+.hover\:bg-gold:hover {
+  background-color: var(--color-gold);
+}
+
+.hover\:text-gold:hover {
+  color: var(--color-gold);
+}
+
+.hover\:border-gold:hover {
+  border-color: var(--color-gold);
+}
+
+/* Focus states */
+.focus\:border-gold:focus {
+  border-color: var(--color-gold);
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-gold);
+  color: var(--color-dark);
+}
+
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1A1A1A;
+  background: var(--color-dark-light);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #D4AF37;
-  border-radius: 3px;
+  background: var(--color-dark-lighter);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+/* Form elements */
+input, select, textarea {
+  font-family: var(--font-body);
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+}
+
+/* Button reset */
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Link reset */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Image */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }

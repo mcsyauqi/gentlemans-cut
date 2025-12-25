@@ -5,53 +5,112 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
 const barbers = [
-  { name: "Master Aldo", role: "Founder & Head Barber", years: 15, specialty: "Classic & Executive Cuts", bio: "With over 15 years of experience, Aldo founded Gentleman's Cut with a vision to bring premium barbering to Jakarta. His precision cuts and attention to detail have earned him a loyal following.", skills: ["Classic Cuts", "Straight Razor", "Styling"] },
-  { name: "Ricky", role: "Senior Barber", years: 10, specialty: "Fades & Modern Styles", bio: "Ricky is our fade specialist, known for creating seamless transitions and modern styles. He stays updated with the latest trends while mastering timeless techniques.", skills: ["Skin Fades", "Undercuts", "Beard Design"] },
-  { name: "Dimas", role: "Style Expert", years: 7, specialty: "Creative & Trendy Looks", bio: "The creative force of our team, Dimas excels at personalized styles that match each client's personality. His artistic approach makes him popular among younger clients.", skills: ["Texture Work", "Hair Art", "Color"] },
-  { name: "Farhan", role: "Junior Barber", years: 3, specialty: "All-Round Services", bio: "Our rising talent, Farhan brings fresh energy and quick learning. He's mastered the fundamentals and continues to grow under the mentorship of our senior barbers.", skills: ["Quick Cuts", "Basic Fades", "Grooming"] },
+  {
+    name: "Master Aldo",
+    role: "Founder & Head Barber",
+    years: 15,
+    specialty: "Classic & Executive Cuts",
+    bio: "Dengan pengalaman lebih dari 15 tahun, Aldo mendirikan Gentleman's Cut dengan visi menghadirkan barbering premium di Jakarta. Ketepatan potongan dan perhatian terhadap detail membuatnya memiliki pelanggan setia.",
+    skills: ["Classic Cuts", "Straight Razor", "Styling"],
+  },
+  {
+    name: "Ricky",
+    role: "Senior Barber",
+    years: 10,
+    specialty: "Fades & Modern Styles",
+    bio: "Ricky adalah spesialis fade kami, terkenal dengan transisi yang mulus dan gaya modern. Ia selalu update dengan tren terbaru sambil menguasai teknik klasik.",
+    skills: ["Skin Fades", "Undercuts", "Beard Design"],
+  },
+  {
+    name: "Dimas",
+    role: "Style Expert",
+    years: 7,
+    specialty: "Creative & Trendy Looks",
+    bio: "Kekuatan kreatif tim kami, Dimas unggul dalam gaya personal yang sesuai kepribadian setiap klien. Pendekatan artistiknya membuatnya populer di kalangan klien muda.",
+    skills: ["Texture Work", "Hair Art", "Color"],
+  },
+  {
+    name: "Farhan",
+    role: "Junior Barber",
+    years: 3,
+    specialty: "All-Round Services",
+    bio: "Talenta muda kami, Farhan membawa energi segar dan pembelajaran cepat. Ia telah menguasai dasar-dasar dan terus berkembang di bawah bimbingan senior barber kami.",
+    skills: ["Quick Cuts", "Basic Fades", "Grooming"],
+  },
 ];
 
 export default function BarberPage() {
   return (
     <>
-      <section className="pt-32 pb-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
-            <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">The Team</p>
-            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Meet Our Expert Barbers</h1>
-            <p className="text-white/60 text-lg">Skilled craftsmen dedicated to making you look and feel your best.</p>
+      {/* Header */}
+      <section className="pt-24 pb-12">
+        <div className="max-w-6xl mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-xl"
+          >
+            <p className="text-gold text-sm tracking-widest mb-2">TIM KAMI</p>
+            <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
+              Meet Our Expert Barbers
+            </h1>
+            <p className="text-white/60">
+              Para craftsman terampil yang berdedikasi untuk membuat Anda tampil dan merasa terbaik.
+            </p>
           </motion.div>
         </div>
       </section>
 
-      <section className="pb-24">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="space-y-16">
+      {/* Barbers List */}
+      <section className="pb-16">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="space-y-12">
             {barbers.map((barber, i) => (
-              <motion.div key={barber.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className={`grid lg:grid-cols-2 gap-12 items-center ${i % 2 === 1 ? "lg:grid-flow-dense" : ""}`}>
+              <motion.div
+                key={barber.name}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className={`grid lg:grid-cols-2 gap-8 items-center ${
+                  i % 2 === 1 ? "lg:grid-flow-dense" : ""
+                }`}
+              >
                 <div className={i % 2 === 1 ? "lg:col-start-2" : ""}>
-                  <div className="aspect-[4/5] bg-neutral-800 relative">
+                  <div className="aspect-[4/5] bg-dark-lighter relative">
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-9xl font-display font-bold text-white/5">{barber.name[0]}</span>
+                      <span className="text-8xl font-display font-bold text-white/5">
+                        {barber.name[0]}
+                      </span>
                     </div>
-                    <div className="absolute bottom-0 left-0 bg-gold text-black p-4">
-                      <p className="text-sm uppercase tracking-wider">{barber.years}+ Years</p>
+                    <div className="absolute bottom-0 left-0 bg-gold text-dark p-4">
+                      <p className="text-sm font-semibold">{barber.years}+ YEARS</p>
                     </div>
                   </div>
                 </div>
+
                 <div>
-                  <p className="text-gold uppercase tracking-wider text-sm mb-2">{barber.role}</p>
-                  <h2 className="text-4xl font-display font-bold mb-4">{barber.name}</h2>
+                  <p className="text-gold text-sm tracking-widest mb-2">{barber.role}</p>
+                  <h2 className="text-3xl font-display font-bold mb-4">{barber.name}</h2>
                   <p className="text-white/60 mb-6 leading-relaxed">{barber.bio}</p>
+
                   <div className="mb-6">
-                    <p className="text-sm text-white/40 uppercase tracking-wider mb-3">Specialties</p>
+                    <p className="text-white/40 text-sm mb-3">SPECIALTIES</p>
                     <div className="flex flex-wrap gap-2">
                       {barber.skills.map((skill) => (
-                        <span key={skill} className="bg-neutral-800 px-4 py-2 text-sm">{skill}</span>
+                        <span
+                          key={skill}
+                          className="bg-dark-lighter px-4 py-2 text-sm"
+                        >
+                          {skill}
+                        </span>
                       ))}
                     </div>
                   </div>
-                  <Link href="/booking" className="inline-flex items-center gap-2 bg-gold text-black px-6 py-3 font-semibold uppercase tracking-wider text-sm hover:bg-white transition-colors">
+
+                  <Link
+                    href="/booking"
+                    className="bg-gold text-dark px-6 py-3 font-semibold inline-flex items-center gap-2 hover:bg-gold-light transition-colors"
+                  >
                     Book with {barber.name.split(" ")[0]} <ArrowRight size={16} />
                   </Link>
                 </div>
@@ -61,11 +120,19 @@ export default function BarberPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-neutral-900">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Want to Join Our Team?</h2>
-          <p className="text-white/60 mb-8 max-w-md mx-auto">We're always looking for talented barbers who share our passion for excellence.</p>
-          <Link href="/kontak" className="inline-flex items-center gap-2 border border-gold text-gold px-8 py-4 font-semibold uppercase tracking-wider hover:bg-gold hover:text-black transition-colors">
+      {/* Join Team CTA */}
+      <section className="py-12 bg-dark-light">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h2 className="text-2xl md:text-3xl font-display font-bold mb-4">
+            Want to Join Our Team?
+          </h2>
+          <p className="text-white/60 mb-6 max-w-md mx-auto">
+            Kami selalu mencari barber berbakat yang berbagi passion untuk keunggulan.
+          </p>
+          <Link
+            href="/kontak"
+            className="border border-gold text-gold px-6 py-3 font-semibold inline-flex items-center gap-2 hover:bg-gold hover:text-dark transition-colors"
+          >
             Apply Now <ArrowRight size={18} />
           </Link>
         </div>

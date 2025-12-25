@@ -2,240 +2,286 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Star, Scissors, ChevronRight, Award, Quote, Clock } from "lucide-react";
+import { ArrowRight, Star, Clock, MapPin, Phone } from "lucide-react";
 
 const services = [
-  { name: "Haircut Classic", desc: "Potong rambut klasik dengan finishing wax", price: "Rp 75.000", icon: "✂️" },
-  { name: "Haircut Premium", desc: "Include hair wash, massage, styling", price: "Rp 120.000", icon: "💈" },
-  { name: "Shaving Classic", desc: "Cukur kumis/jenggot dengan pisau cukur", price: "Rp 50.000", icon: "🪒" },
-  { name: "Hot Towel Shave", desc: "Shaving mewah dengan handuk panas", price: "Rp 100.000", icon: "🧖‍♂️" },
-  { name: "Hair Coloring", desc: "Pewarnaan rambut profesional", price: "Rp 150.000", icon: "🎨" },
-  { name: "Kids Haircut", desc: "Potong rambut anak (di bawah 12 tahun)", price: "Rp 50.000", icon: "👦" },
+  { name: "Classic Cut", price: "75K", image: "01" },
+  { name: "Premium Cut", price: "120K", image: "02" },
+  { name: "Hot Shave", price: "100K", image: "03" },
+  { name: "Coloring", price: "150K", image: "04" },
+  { name: "Beard Trim", price: "80K", image: "05" },
+  { name: "Kids Cut", price: "50K", image: "06" },
 ];
 
-const barbers = [
-  { name: "Master Aldo", role: "Head Barber", exp: "15 tahun", spec: "Classic Cut", init: "MA" },
-  { name: "Bro Ricky", role: "Senior Barber", exp: "10 tahun", spec: "Fade & Undercut", init: "BR" },
-  { name: "Bro Dimas", role: "Barber", exp: "7 tahun", spec: "Modern Style", init: "BD" },
-  { name: "Bro Farhan", role: "Junior Barber", exp: "3 tahun", spec: "All-rounder", init: "BF" },
+const team = [
+  { name: "Aldo", title: "Master Barber", years: 15 },
+  { name: "Ricky", title: "Senior Barber", years: 10 },
+  { name: "Dimas", title: "Style Expert", years: 7 },
+  { name: "Farhan", title: "Junior Barber", years: 3 },
 ];
 
-const membership = [
-  { name: "Silver", price: "Rp 200.000", features: ["2x Haircut Classic", "Diskon 10%"], popular: false },
-  { name: "Gold", price: "Rp 350.000", features: ["2x Haircut Premium", "1x Hot Towel Shave", "Diskon 15%", "Priority booking"], popular: true },
-  { name: "Platinum", price: "Rp 500.000", features: ["Unlimited Haircut", "2x Hot Towel Shave", "Diskon 20%", "VIP room"], popular: false },
-];
-
-const testimonials = [
-  { text: "Barbershop terbaik di Jakarta! Tempatnya nyaman, barbernya ramah dan skillful.", name: "Andi", type: "Member Gold" },
-  { text: "Sudah langganan 3 tahun. Konsisten hasilnya selalu memuaskan.", name: "Budi", type: "Member Platinum" },
-  { text: "Potong rambut di sini bikin nagih. Suasananya asik banget!", name: "Reza", type: "Regular Customer" },
+const reviews = [
+  { text: "Best barbershop in town! The attention to detail is incredible.", author: "Andi P.", rating: 5 },
+  { text: "Been coming here for 3 years. Consistent quality every time.", author: "Budi S.", rating: 5 },
+  { text: "Great atmosphere, skilled barbers. Highly recommended!", author: "Reza M.", rating: 5 },
 ];
 
 export default function Home() {
   return (
     <>
-      {/* HERO */}
-      <section className="bg-[#1A1A2E] pt-24 pb-16">
-        <div className="max-w-6xl mx-auto px-4">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
-            <div className="inline-flex items-center gap-2 bg-[#C9A962]/10 border border-[#C9A962]/30 rounded-full px-4 py-1.5 mb-6">
-              <Star className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />
-              <span className="text-[#C9A962] text-sm">4.9 Rating dari 2000+ Review</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-4 font-heading">
-              Tampil Gagah,<br /><span className="gold-text">Rapi, Percaya Diri</span>
-            </h1>
-
-            <p className="text-gray-300 max-w-lg mx-auto mb-8">
-              Barbershop premium dengan barber berpengalaman dan suasana nyaman. Nikmati pengalaman grooming terbaik untuk pria sejati.
-            </p>
-
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link href="/booking" className="w-full sm:w-auto bg-[#C9A962] text-[#1A1A2E] px-6 py-3 rounded font-bold hover:bg-[#b8983e] transition-colors flex items-center justify-center gap-2">
-                <Scissors className="w-5 h-5" /> Booking Sekarang
-              </Link>
-              <Link href="/harga" className="w-full sm:w-auto border-2 border-white text-white px-6 py-3 rounded font-bold hover:bg-white hover:text-[#1A1A2E] transition-colors text-center">
-                Lihat Harga
-              </Link>
-            </div>
-          </motion.div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12">
-            {[{ v: "15+", l: "Tahun Pengalaman" }, { v: "10K+", l: "Pelanggan Puas" }, { v: "4", l: "Barber Profesional" }, { v: "4.9", l: "Rating Google" }].map((s) => (
-              <div key={s.l} className="text-center">
-                <div className="text-3xl font-bold text-[#C9A962] font-heading">{s.v}</div>
-                <div className="text-gray-400 text-sm">{s.l}</div>
+      {/* HERO - Split Layout */}
+      <section className="min-h-screen flex items-center pt-20">
+        <div className="max-w-7xl mx-auto px-6 w-full">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }}>
+              <p className="text-gold uppercase tracking-[0.3em] text-sm mb-4">Premium Barbershop</p>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-display font-bold leading-tight mb-6">
+                Where Style<br />
+                <span className="text-gold">Meets</span><br />
+                Precision
+              </h1>
+              <p className="text-white/60 text-lg mb-8 max-w-md">
+                Experience the art of grooming at Jakarta's finest barbershop. Classic techniques, modern style.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/booking" className="bg-gold text-black px-8 py-4 font-semibold uppercase tracking-wider hover:bg-white transition-colors inline-flex items-center justify-center gap-2">
+                  Book Appointment <ArrowRight size={18} />
+                </Link>
+                <Link href="/layanan" className="border border-white/30 text-white px-8 py-4 font-semibold uppercase tracking-wider hover:border-gold hover:text-gold transition-colors text-center">
+                  Our Services
+                </Link>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* LAYANAN */}
-      <section className="py-16 bg-[#F5F5F5]">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1A1A2E] font-heading">LAYANAN KAMI</h2>
-            <div className="w-16 h-1 bg-[#C9A962] mx-auto mt-3 mb-4"></div>
-            <p className="text-gray-600">Berbagai layanan grooming premium untuk kebutuhan Anda</p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {services.map((s) => (
-              <div key={s.name} className="bg-white rounded-lg p-5 shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-3xl mb-3">{s.icon}</div>
-                <h3 className="text-lg font-bold text-[#1A1A2E] font-heading">{s.name}</h3>
-                <p className="text-gray-600 text-sm mt-1 mb-3">{s.desc}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xl font-bold text-[#C9A962]">{s.price}</span>
-                  <Link href="/booking" className="text-[#1A1A2E] text-sm font-medium hover:text-[#C9A962] flex items-center gap-1">
-                    Booking <ChevronRight className="w-4 h-4" />
-                  </Link>
+              <div className="flex items-center gap-8 mt-12 pt-8 border-t border-white/10">
+                <div>
+                  <p className="text-3xl font-display font-bold text-gold">15+</p>
+                  <p className="text-white/40 text-sm">Years Experience</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-display font-bold text-gold">10K+</p>
+                  <p className="text-white/40 text-sm">Happy Clients</p>
+                </div>
+                <div>
+                  <p className="text-3xl font-display font-bold text-gold">4.9</p>
+                  <p className="text-white/40 text-sm">Rating</p>
                 </div>
               </div>
-            ))}
-          </div>
+            </motion.div>
 
-          <div className="text-center mt-8">
-            <Link href="/layanan" className="inline-flex items-center gap-2 bg-[#1A1A2E] text-white px-6 py-3 rounded font-bold hover:bg-[#2a2a4e] transition-colors">
-              Lihat Semua Layanan <ChevronRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* BARBER */}
-      <section className="py-16 bg-[#1A1A2E]">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white font-heading">TIM BARBER KAMI</h2>
-            <div className="w-16 h-1 bg-[#C9A962] mx-auto mt-3 mb-4"></div>
-            <p className="text-gray-400">Barber berpengalaman yang berdedikasi tinggi</p>
-          </div>
-
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            {barbers.map((b) => (
-              <div key={b.name} className="text-center">
-                <div className="w-24 h-24 md:w-28 md:h-28 mx-auto rounded-full bg-gradient-to-br from-[#C9A962] to-[#8B6914] p-0.5 mb-3">
-                  <div className="w-full h-full rounded-full bg-[#1A1A2E] flex items-center justify-center text-2xl md:text-3xl font-bold text-[#C9A962] font-heading">
-                    {b.init}
+            <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8, delay: 0.2 }} className="relative">
+              <div className="aspect-[4/5] bg-gradient-to-br from-neutral-800 to-neutral-900 rounded-sm overflow-hidden relative">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center">
+                    <p className="text-8xl font-display font-bold text-gold/20">GC</p>
+                    <p className="text-white/20 text-sm tracking-widest uppercase mt-2">Est. 2010</p>
                   </div>
                 </div>
-                <div className="bg-[#C9A962] text-[#1A1A2E] text-xs font-bold px-2 py-0.5 rounded inline-block mb-2">{b.role}</div>
-                <h3 className="text-white font-bold font-heading">{b.name}</h3>
-                <p className="text-gray-400 text-xs">{b.exp}</p>
-                <p className="text-[#C9A962] text-xs">{b.spec}</p>
+                <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-black/80 to-transparent"></div>
               </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-8">
-            <Link href="/barber" className="inline-flex items-center gap-2 border-2 border-[#C9A962] text-[#C9A962] px-6 py-3 rounded font-bold hover:bg-[#C9A962] hover:text-[#1A1A2E] transition-colors">
-              Lihat Profil Lengkap <ChevronRight className="w-5 h-5" />
-            </Link>
+              <div className="absolute -bottom-6 -left-6 bg-gold text-black p-6">
+                <p className="text-sm uppercase tracking-wider font-semibold">Open Daily</p>
+                <p className="text-2xl font-display font-bold">10 - 21</p>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* GALERI */}
-      <section className="py-16 bg-[#F5F5F5]">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1A1A2E] font-heading">GALERI HASIL KERJA</h2>
-            <div className="w-16 h-1 bg-[#C9A962] mx-auto mt-3 mb-4"></div>
-            <p className="text-gray-600">Lihat hasil karya terbaik dari tim barber kami</p>
+      {/* SERVICES - Horizontal Scroll */}
+      <section className="py-24 bg-neutral-900">
+        <div className="max-w-7xl mx-auto px-6 mb-12">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
+            <div>
+              <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">What We Offer</p>
+              <h2 className="text-4xl md:text-5xl font-display font-bold">Our Services</h2>
+            </div>
+            <Link href="/layanan" className="text-gold hover:text-white transition-colors inline-flex items-center gap-2 text-sm uppercase tracking-wider">
+              View All Services <ArrowRight size={16} />
+            </Link>
           </div>
+        </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="aspect-square bg-gradient-to-br from-[#1A1A2E] to-[#2a2a4e] rounded-lg flex items-center justify-center group cursor-pointer hover:opacity-90 transition-opacity">
-                <Scissors className="w-8 h-8 text-[#C9A962]/30 group-hover:text-[#C9A962]/50 transition-colors" />
-              </div>
+        <div className="overflow-x-auto pb-6 scrollbar-thin">
+          <div className="flex gap-6 px-6 min-w-max">
+            {services.map((service, i) => (
+              <motion.div key={service.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="w-72 group">
+                <div className="aspect-[3/4] bg-neutral-800 mb-4 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-6xl font-display font-bold text-white/10">{service.image}</span>
+                  </div>
+                  <div className="absolute inset-0 bg-gold/0 group-hover:bg-gold/20 transition-colors"></div>
+                </div>
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-semibold">{service.name}</h3>
+                  <p className="text-gold font-display text-xl">Rp {service.price}</p>
+                </div>
+              </motion.div>
             ))}
           </div>
+        </div>
+      </section>
 
-          <div className="text-center mt-8">
-            <Link href="/galeri" className="inline-flex items-center gap-2 bg-[#1A1A2E] text-white px-6 py-3 rounded font-bold hover:bg-[#2a2a4e] transition-colors">
-              Lihat Galeri Lengkap <ChevronRight className="w-5 h-5" />
-            </Link>
+      {/* ABOUT - Full Width Image */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <div className="order-2 lg:order-1">
+              <div className="grid grid-cols-2 gap-4">
+                <div className="aspect-square bg-neutral-800 relative">
+                  <div className="absolute inset-0 flex items-center justify-center text-4xl font-display font-bold text-white/10">01</div>
+                </div>
+                <div className="aspect-square bg-neutral-800 relative mt-12">
+                  <div className="absolute inset-0 flex items-center justify-center text-4xl font-display font-bold text-white/10">02</div>
+                </div>
+              </div>
+            </div>
+            <div className="order-1 lg:order-2">
+              <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">About Us</p>
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-6">Crafting Confidence Since 2010</h2>
+              <p className="text-white/60 mb-6 leading-relaxed">
+                Gentleman's Cut berdiri dengan satu misi: memberikan pengalaman grooming terbaik untuk pria Indonesia. Kami menggabungkan teknik klasik dengan gaya modern.
+              </p>
+              <p className="text-white/60 mb-8 leading-relaxed">
+                Setiap barber kami terlatih untuk memahami kebutuhan unik setiap pelanggan, memastikan Anda keluar dengan penampilan dan rasa percaya diri terbaik.
+              </p>
+              <Link href="/barber" className="inline-flex items-center gap-2 text-gold hover:text-white transition-colors uppercase tracking-wider text-sm">
+                Meet Our Team <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* TEAM - Grid */}
+      <section className="py-24 bg-neutral-900">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">The Experts</p>
+            <h2 className="text-4xl md:text-5xl font-display font-bold">Our Barbers</h2>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {team.map((member, i) => (
+              <motion.div key={member.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="group">
+                <div className="aspect-[3/4] bg-neutral-800 mb-4 relative overflow-hidden">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className="text-5xl font-display font-bold text-white/10">{member.name[0]}</span>
+                  </div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                    <p className="text-gold text-sm">{member.years}+ Years</p>
+                  </div>
+                </div>
+                <h3 className="text-lg font-semibold">{member.name}</h3>
+                <p className="text-white/50 text-sm">{member.title}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* REVIEWS */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">Testimonials</p>
+            <h2 className="text-4xl md:text-5xl font-display font-bold">What Clients Say</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {reviews.map((review, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }} className="bg-neutral-900 p-8 border-l-2 border-gold">
+                <div className="flex gap-1 mb-4">
+                  {[...Array(review.rating)].map((_, j) => (
+                    <Star key={j} size={16} className="fill-gold text-gold" />
+                  ))}
+                </div>
+                <p className="text-white/70 mb-6 italic">"{review.text}"</p>
+                <p className="text-gold font-semibold">{review.author}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* MEMBERSHIP */}
-      <section className="py-16 bg-[#1A1A2E]">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-white font-heading">JADI MEMBER, HEMAT LEBIH BANYAK</h2>
-            <div className="w-16 h-1 bg-[#C9A962] mx-auto mt-3 mb-4"></div>
-            <p className="text-gray-400">Pilih paket membership sesuai kebutuhan Anda</p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {membership.map((m) => (
-              <div key={m.name} className={`rounded-lg p-5 ${m.popular ? "bg-gradient-to-b from-[#C9A962] to-[#8B6914]" : "bg-white/5 border border-white/10"}`}>
-                {m.popular && <div className="bg-[#8B0000] text-white text-xs font-bold text-center py-1 rounded mb-3 -mt-2 -mx-2">PALING POPULER</div>}
-                <h3 className={`text-xl font-bold font-heading ${m.popular ? "text-[#1A1A2E]" : "text-white"}`}>{m.name} Member</h3>
-                <div className="mt-2 mb-4">
-                  <span className={`text-2xl font-bold ${m.popular ? "text-[#1A1A2E]" : "text-[#C9A962]"}`}>{m.price}</span>
-                  <span className={m.popular ? "text-[#1A1A2E]/70" : "text-gray-400"}>/bulan</span>
-                </div>
-                <ul className="space-y-2 mb-5">
-                  {m.features.map((f) => (
-                    <li key={f} className={`flex items-center gap-2 text-sm ${m.popular ? "text-[#1A1A2E]" : "text-gray-300"}`}>
-                      <Award className={`w-4 h-4 ${m.popular ? "text-[#1A1A2E]" : "text-[#C9A962]"}`} /> {f}
-                    </li>
-                  ))}
-                </ul>
-                <Link href="/booking" className={`block text-center py-2 rounded font-bold text-sm ${m.popular ? "bg-[#1A1A2E] text-white" : "bg-[#C9A962] text-[#1A1A2E]"}`}>
-                  Daftar Sekarang
+      <section className="py-24 bg-gold">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <p className="text-black/60 uppercase tracking-[0.3em] text-sm mb-3">Exclusive</p>
+              <h2 className="text-4xl md:text-5xl font-display font-bold text-black mb-6">Join Our Membership</h2>
+              <p className="text-black/70 mb-8 max-w-md">
+                Dapatkan akses prioritas, diskon eksklusif hingga 20%, dan benefit spesial lainnya sebagai member Gentleman's Cut.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/harga" className="bg-black text-white px-8 py-4 font-semibold uppercase tracking-wider hover:bg-neutral-800 transition-colors text-center">
+                  View Plans
+                </Link>
+                <Link href="/booking" className="border-2 border-black text-black px-8 py-4 font-semibold uppercase tracking-wider hover:bg-black hover:text-white transition-colors text-center">
+                  Join Now
                 </Link>
               </div>
-            ))}
+            </div>
+            <div className="grid grid-cols-3 gap-4 text-center">
+              <div className="bg-black/10 p-6">
+                <p className="text-4xl font-display font-bold text-black">200K</p>
+                <p className="text-black/60 text-sm">Silver/mo</p>
+              </div>
+              <div className="bg-black text-white p-6">
+                <p className="text-4xl font-display font-bold">350K</p>
+                <p className="text-white/60 text-sm">Gold/mo</p>
+              </div>
+              <div className="bg-black/10 p-6">
+                <p className="text-4xl font-display font-bold text-black">500K</p>
+                <p className="text-black/60 text-sm">Platinum/mo</p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* TESTIMONIAL */}
-      <section className="py-16 bg-[#F5F5F5]">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-[#1A1A2E] font-heading">APA KATA MEREKA</h2>
-            <div className="w-16 h-1 bg-[#C9A962] mx-auto mt-3 mb-4"></div>
-            <p className="text-gray-600">Testimoni dari pelanggan setia Gentleman's Cut</p>
-          </div>
+      {/* LOCATION */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12">
+            <div>
+              <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">Find Us</p>
+              <h2 className="text-4xl md:text-5xl font-display font-bold mb-8">Visit Our Shop</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {testimonials.map((t) => (
-              <div key={t.name} className="bg-white rounded-lg p-5 shadow-sm relative">
-                <Quote className="absolute top-4 right-4 w-6 h-6 text-[#C9A962]/20" />
-                <div className="flex gap-1 mb-3">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 text-[#C9A962] fill-[#C9A962]" />)}
-                </div>
-                <p className="text-gray-600 text-sm mb-4 italic">"{t.text}"</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#1A1A2E] flex items-center justify-center text-[#C9A962] font-bold">{t.name[0]}</div>
+              <div className="space-y-6">
+                <div className="flex items-start gap-4">
+                  <MapPin className="text-gold mt-1" size={20} />
                   <div>
-                    <div className="font-bold text-[#1A1A2E] text-sm">{t.name}</div>
-                    <div className="text-[#C9A962] text-xs">{t.type}</div>
+                    <p className="font-semibold mb-1">Address</p>
+                    <p className="text-white/60">Jl. Sudirman No. 123, Jakarta Pusat 10220</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Clock className="text-gold mt-1" size={20} />
+                  <div>
+                    <p className="font-semibold mb-1">Hours</p>
+                    <p className="text-white/60">Monday - Sunday: 10:00 - 21:00</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <Phone className="text-gold mt-1" size={20} />
+                  <div>
+                    <p className="font-semibold mb-1">Contact</p>
+                    <p className="text-white/60">+62 21 1234 5678</p>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-[#1A1A2E]">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white font-heading mb-4">SIAP TAMPIL LEBIH KEREN?</h2>
-          <p className="text-gray-300 mb-8">Booking sekarang dan rasakan pengalaman grooming premium bersama barber profesional kami</p>
-          <Link href="/booking" className="inline-flex items-center gap-2 bg-[#C9A962] text-[#1A1A2E] px-8 py-4 rounded font-bold hover:bg-[#b8983e] transition-colors">
-            <Clock className="w-5 h-5" /> Booking Jadwal
-          </Link>
+              <Link href="/booking" className="inline-flex items-center gap-2 bg-gold text-black px-8 py-4 font-semibold uppercase tracking-wider hover:bg-white transition-colors mt-8">
+                Book Your Visit <ArrowRight size={18} />
+              </Link>
+            </div>
+            <div className="aspect-video lg:aspect-auto bg-neutral-800 relative">
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-white/20 uppercase tracking-widest text-sm">Map Location</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

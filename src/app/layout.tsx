@@ -4,16 +4,16 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Gentleman's Cut | Barbershop Premium Jakarta | Booking Online",
+  title: "Gentleman's Cut | Barbershop Premium Jakarta",
   description: "Barbershop premium dengan barber berpengalaman. Haircut, shaving, grooming. Booking online, membership tersedia.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="id">
-      <body>
+      <body className="antialiased">
         <Navbar />
-        {children}
+        <main>{children}</main>
         <Footer />
       </body>
     </html>

@@ -1,109 +1,132 @@
 "use client";
 
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Instagram, MessageCircle } from "lucide-react";
+import Link from "next/link";
 
 export default function KontakPage() {
-  const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-    setTimeout(() => setSent(false), 3000);
-    setForm({ name: "", email: "", phone: "", subject: "", message: "" });
-  };
-
   return (
     <>
-      <section className="bg-[#1A1A2E] pt-24 pb-12">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-4xl md:text-5xl font-bold text-white font-heading">HUBUNGI KAMI</h1>
-            <div className="w-16 h-1 bg-[#C9A962] mx-auto mt-3 mb-4"></div>
-            <p className="text-gray-300">Punya pertanyaan atau masukan? Kami siap membantu</p>
+      <section className="pt-32 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
+            <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">Get In Touch</p>
+            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Contact Us</h1>
+            <p className="text-white/60 text-lg">Have questions? We're here to help. Reach out to us anytime.</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-[#F5F5F5]">
-        <div className="max-w-5xl mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div>
-              <h2 className="text-2xl font-bold text-[#1A1A2E] font-heading mb-6">INFORMASI KONTAK</h2>
-              <div className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-[#C9A962] rounded-lg flex items-center justify-center shrink-0"><MapPin className="w-5 h-5 text-[#1A1A2E]" /></div>
-                  <div><div className="font-bold text-[#1A1A2E] text-sm">Alamat</div><div className="text-gray-600 text-sm">Jl. Sudirman No. 123, Jakarta Pusat 10220</div></div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-[#C9A962] rounded-lg flex items-center justify-center shrink-0"><Phone className="w-5 h-5 text-[#1A1A2E]" /></div>
-                  <div><div className="font-bold text-[#1A1A2E] text-sm">Telepon</div><div className="text-gray-600 text-sm">+62 21 1234 5678 / +62 812 3456 7890</div></div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-[#C9A962] rounded-lg flex items-center justify-center shrink-0"><Mail className="w-5 h-5 text-[#1A1A2E]" /></div>
-                  <div><div className="font-bold text-[#1A1A2E] text-sm">Email</div><div className="text-gray-600 text-sm">info@gentlemanscut.id</div></div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 bg-[#C9A962] rounded-lg flex items-center justify-center shrink-0"><Clock className="w-5 h-5 text-[#1A1A2E]" /></div>
-                  <div><div className="font-bold text-[#1A1A2E] text-sm">Jam Operasional</div><div className="text-gray-600 text-sm">Senin - Minggu, 10:00 - 21:00 WIB</div></div>
-                </div>
+      <section className="pb-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12">
+            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <div className="bg-neutral-900 p-8 md:p-12">
+                <h2 className="text-2xl font-display font-bold mb-8">Send Us a Message</h2>
+                <form className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Name</label>
+                      <input type="text" className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none" placeholder="Your name" />
+                    </div>
+                    <div>
+                      <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Phone</label>
+                      <input type="tel" className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none" placeholder="08xxxxxxxxxx" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Email</label>
+                    <input type="email" className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none" placeholder="your@email.com" />
+                  </div>
+                  <div>
+                    <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Subject</label>
+                    <select className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none">
+                      <option value="">Select a subject</option>
+                      <option value="booking">Booking Inquiry</option>
+                      <option value="membership">Membership</option>
+                      <option value="career">Career Opportunity</option>
+                      <option value="feedback">Feedback</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Message</label>
+                    <textarea rows={5} className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none resize-none" placeholder="Your message..."></textarea>
+                  </div>
+                  <button type="submit" className="w-full bg-gold text-black py-4 font-semibold uppercase tracking-wider hover:bg-white transition-colors">
+                    Send Message
+                  </button>
+                </form>
               </div>
-              <div className="mt-6 bg-[#1A1A2E] rounded-lg aspect-video flex items-center justify-center">
-                <div className="text-center"><MapPin className="w-10 h-10 text-[#C9A962]/50 mx-auto mb-2" /><div className="text-gray-400 text-sm">Google Maps</div></div>
-              </div>
-            </div>
+            </motion.div>
 
-            <div>
-              <h2 className="text-2xl font-bold text-[#1A1A2E] font-heading mb-6">KIRIM PESAN</h2>
-              <form onSubmit={handleSubmit} className="bg-white rounded-lg p-5 shadow-sm space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div><label className="block text-sm font-medium text-gray-700 mb-1">Nama *</label><input type="text" required value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none text-sm" /></div>
-                  <div><label className="block text-sm font-medium text-gray-700 mb-1">Telepon *</label><input type="tel" required value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none text-sm" /></div>
+            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="space-y-8">
+              <div>
+                <h2 className="text-2xl font-display font-bold mb-8">Visit Our Shop</h2>
+                <div className="aspect-video bg-neutral-800 relative mb-8">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <p className="text-white/20 uppercase tracking-widest text-sm">Map Location</p>
+                  </div>
                 </div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">Email *</label><input type="email" required value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none text-sm" /></div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Subjek *</label>
-                  <select required value={form.subject} onChange={(e) => setForm({ ...form, subject: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none text-sm">
-                    <option value="">Pilih subjek</option>
-                    <option value="booking">Pertanyaan Booking</option>
-                    <option value="membership">Pertanyaan Membership</option>
-                    <option value="feedback">Keluhan/Masukan</option>
-                    <option value="partnership">Kerjasama</option>
-                    <option value="career">Karir</option>
-                    <option value="other">Lainnya</option>
-                  </select>
+              </div>
+
+              <div className="grid gap-6">
+                <div className="flex items-start gap-4 p-6 bg-neutral-900">
+                  <MapPin className="text-gold mt-1 flex-shrink-0" size={24} />
+                  <div>
+                    <h3 className="font-semibold mb-1">Address</h3>
+                    <p className="text-white/60">Jl. Sudirman No. 123<br />Jakarta Pusat 10220</p>
+                  </div>
                 </div>
-                <div><label className="block text-sm font-medium text-gray-700 mb-1">Pesan *</label><textarea required value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none text-sm" rows={4} /></div>
-                <button type="submit" className="w-full bg-[#C9A962] text-[#1A1A2E] py-2.5 rounded-lg font-bold flex items-center justify-center gap-2 hover:bg-[#b8983e] transition-colors">
-                  <Send className="w-4 h-4" /> Kirim Pesan
-                </button>
-                {sent && <div className="p-3 bg-green-100 text-green-700 rounded-lg text-center text-sm">Pesan berhasil dikirim!</div>}
-              </form>
-            </div>
+
+                <div className="flex items-start gap-4 p-6 bg-neutral-900">
+                  <Clock className="text-gold mt-1 flex-shrink-0" size={24} />
+                  <div>
+                    <h3 className="font-semibold mb-1">Opening Hours</h3>
+                    <p className="text-white/60">Monday - Sunday<br />10:00 - 21:00</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-6 bg-neutral-900">
+                  <Phone className="text-gold mt-1 flex-shrink-0" size={24} />
+                  <div>
+                    <h3 className="font-semibold mb-1">Phone</h3>
+                    <p className="text-white/60">+62 21 1234 5678</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 p-6 bg-neutral-900">
+                  <Mail className="text-gold mt-1 flex-shrink-0" size={24} />
+                  <div>
+                    <h3 className="font-semibold mb-1">Email</h3>
+                    <p className="text-white/60">info@gentlemanscut.id</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <h3 className="font-semibold mb-4">Follow Us</h3>
+                <div className="flex gap-4">
+                  <a href="https://instagram.com/gentlemanscut" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-neutral-900 flex items-center justify-center text-white/60 hover:text-gold hover:bg-neutral-800 transition-colors">
+                    <Instagram size={20} />
+                  </a>
+                  <a href="https://wa.me/6221123456789" target="_blank" rel="noopener noreferrer" className="w-12 h-12 bg-neutral-900 flex items-center justify-center text-white/60 hover:text-gold hover:bg-neutral-800 transition-colors">
+                    <MessageCircle size={20} />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-[#1A1A2E]">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-2xl font-bold text-white font-heading text-center mb-2">PERTANYAAN UMUM</h2>
-          <div className="w-16 h-1 bg-[#C9A962] mx-auto mb-6"></div>
-          <div className="space-y-3">
-            {[
-              { q: "Apakah harus booking terlebih dahulu?", a: "Tidak wajib, tapi sangat disarankan untuk menghindari antrian panjang." },
-              { q: "Berapa lama waktu tunggu jika walk-in?", a: "Di jam sibuk bisa mencapai 30-60 menit." },
-              { q: "Apakah ada layanan untuk anak-anak?", a: "Ya, Kids Haircut untuk anak di bawah 12 tahun dengan harga Rp 50.000." },
-              { q: "Metode pembayaran apa saja?", a: "Tunai, kartu debit/kredit, QRIS, dan transfer bank." },
-              { q: "Bagaimana cara menjadi member?", a: "Daftar langsung di tempat atau melalui halaman Booking website." },
-            ].map((faq) => (
-              <div key={faq.q} className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <div className="font-bold text-[#C9A962] text-sm mb-1">{faq.q}</div>
-                <div className="text-gray-300 text-sm">{faq.a}</div>
-              </div>
-            ))}
-          </div>
+      <section className="py-16 bg-gold">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-black mb-4">Prefer to Book Directly?</h2>
+          <p className="text-black/70 mb-8 max-w-md mx-auto">Skip the form and book your appointment instantly through our booking system.</p>
+          <Link href="/booking" className="inline-flex items-center gap-2 bg-black text-white px-8 py-4 font-semibold uppercase tracking-wider hover:bg-neutral-800 transition-colors">
+            Book Now
+          </Link>
         </div>
       </section>
     </>

@@ -2,95 +2,120 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, User, Scissors, Check, Phone, ChevronRight } from "lucide-react";
+import { ArrowRight, ArrowLeft, Check, Calendar, Clock, User, Scissors } from "lucide-react";
 
 const services = [
-  { id: 1, name: "Haircut Classic", price: 75000, time: "30 menit" },
-  { id: 2, name: "Haircut Premium", price: 120000, time: "45 menit" },
-  { id: 3, name: "Shaving Classic", price: 50000, time: "20 menit" },
-  { id: 4, name: "Hot Towel Shave", price: 100000, time: "40 menit" },
-  { id: 5, name: "Hair Coloring", price: 150000, time: "60 menit" },
-  { id: 6, name: "Kids Haircut", price: 50000, time: "25 menit" },
-  { id: 7, name: "Beard Grooming", price: 80000, time: "30 menit" },
-  { id: 8, name: "Hair Treatment", price: 200000, time: "60 menit" },
+  { id: "classic", name: "Classic Haircut", price: "75.000", duration: "30 min" },
+  { id: "premium", name: "Premium Haircut", price: "120.000", duration: "45 min" },
+  { id: "shave", name: "Hot Towel Shave", price: "100.000", duration: "40 min" },
+  { id: "beard", name: "Beard Grooming", price: "80.000", duration: "30 min" },
+  { id: "color", name: "Hair Coloring", price: "150.000", duration: "60 min" },
+  { id: "treatment", name: "Hair Treatment", price: "200.000", duration: "60 min" },
 ];
 
 const barbers = [
-  { id: 1, name: "Master Aldo", spec: "Classic Cut" },
-  { id: 2, name: "Bro Ricky", spec: "Fade & Undercut" },
-  { id: 3, name: "Bro Dimas", spec: "Modern Style" },
-  { id: 4, name: "Bro Farhan", spec: "All-rounder" },
+  { id: "aldo", name: "Master Aldo", specialty: "Classic & Executive" },
+  { id: "ricky", name: "Ricky", specialty: "Fades & Modern" },
+  { id: "dimas", name: "Dimas", specialty: "Creative & Trendy" },
+  { id: "farhan", name: "Farhan", specialty: "All-Round" },
 ];
 
-const times = ["10:00", "10:30", "11:00", "11:30", "12:00", "12:30", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30"];
-
-const fmt = (n: number) => new Intl.NumberFormat("id-ID", { style: "currency", currency: "IDR", minimumFractionDigits: 0 }).format(n);
+const timeSlots = ["10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00", "18:00", "19:00", "20:00"];
 
 export default function BookingPage() {
   const [step, setStep] = useState(1);
-  const [svc, setSvc] = useState<number[]>([]);
-  const [barber, setBarber] = useState<number | null>(null);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [form, setForm] = useState({ name: "", phone: "", email: "", notes: "" });
+  const [selectedService, setSelectedService] = useState("");
+  const [selectedBarber, setSelectedBarber] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
 
-  const toggle = (id: number) => setSvc((p) => (p.includes(id) ? p.filter((x) => x !== id) : [...p, id]));
-  const total = svc.reduce((t, id) => t + (services.find((s) => s.id === id)?.price || 0), 0);
-  const minDate = new Date().toISOString().split("T")[0];
-  const canNext = () => {
-    if (step === 1) return svc.length > 0;
-    if (step === 2) return barber !== null;
-    if (step === 3) return date && time;
-    if (step === 4) return form.name && form.phone;
-    return false;
+  const nextStep = () => setStep((s) => Math.min(s + 1, 4));
+  const prevStep = () => setStep((s) => Math.max(s - 1, 1));
+
+  const generateDates = () => {
+    const dates = [];
+    const today = new Date();
+    for (let i = 0; i < 14; i++) {
+      const date = new Date(today);
+      date.setDate(today.getDate() + i);
+      dates.push({
+        value: date.toISOString().split("T")[0],
+        day: date.toLocaleDateString("id-ID", { weekday: "short" }),
+        date: date.getDate(),
+        month: date.toLocaleDateString("id-ID", { month: "short" }),
+      });
+    }
+    return dates;
   };
 
-  const submit = () => {
-    const svcNames = svc.map((id) => services.find((s) => s.id === id)?.name).join(", ");
-    const barberName = barbers.find((b) => b.id === barber)?.name;
-    const msg = `Halo Gentleman's Cut!\n\nLayanan: ${svcNames}\nBarber: ${barberName}\nTanggal: ${date}\nJam: ${time}\nTotal: ${fmt(total)}\n\nNama: ${form.name}\nHP: ${form.phone}\nEmail: ${form.email || "-"}\nCatatan: ${form.notes || "-"}`;
-    window.open(`https://wa.me/6281234567890?text=${encodeURIComponent(msg)}`, "_blank");
+  const dates = generateDates();
+
+  const handleSubmit = () => {
+    const service = services.find((s) => s.id === selectedService);
+    const barber = barbers.find((b) => b.id === selectedBarber);
+    const message = `Halo, saya ingin booking:\n\nNama: ${name}\nNo. HP: ${phone}\nLayanan: ${service?.name}\nBarber: ${barber?.name}\nTanggal: ${selectedDate}\nWaktu: ${selectedTime}\n\nTerima kasih!`;
+    const waUrl = `https://wa.me/6221123456789?text=${encodeURIComponent(message)}`;
+    window.open(waUrl, "_blank");
+  };
+
+  const canProceed = () => {
+    switch (step) {
+      case 1: return selectedService !== "";
+      case 2: return selectedBarber !== "";
+      case 3: return selectedDate !== "" && selectedTime !== "";
+      case 4: return name !== "" && phone !== "";
+      default: return false;
+    }
   };
 
   return (
     <>
-      <section className="bg-[#1A1A2E] pt-24 pb-10">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-4xl md:text-5xl font-bold text-white font-heading">BOOKING ONLINE</h1>
-            <div className="w-16 h-1 bg-[#C9A962] mx-auto mt-3 mb-4"></div>
-            <p className="text-gray-300">Pilih layanan, barber, dan jadwal yang Anda inginkan</p>
+      <section className="pt-32 pb-8">
+        <div className="max-w-4xl mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center">
+            <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">Reservation</p>
+            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Book Your Visit</h1>
+            <p className="text-white/60 text-lg">Schedule your appointment in just a few steps.</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-10 bg-[#F5F5F5]">
-        <div className="max-w-2xl mx-auto px-4">
-          <div className="flex items-center justify-center gap-0 mb-8">
-            {[1, 2, 3, 4].map((s, i) => (
-              <div key={s} className="flex items-center">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${step >= s ? "bg-[#C9A962] text-[#1A1A2E]" : "bg-gray-300 text-gray-500"}`}>
-                  {step > s ? <Check className="w-4 h-4" /> : s}
+      <section className="pb-24">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="flex justify-center mb-12">
+            <div className="flex items-center gap-4">
+              {[1, 2, 3, 4].map((s) => (
+                <div key={s} className="flex items-center gap-4">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors ${step >= s ? "bg-gold text-black" : "bg-neutral-800 text-white/40"}`}>
+                    {step > s ? <Check size={18} /> : s}
+                  </div>
+                  {s < 4 && <div className={`w-12 h-0.5 ${step > s ? "bg-gold" : "bg-neutral-800"}`}></div>}
                 </div>
-                {i < 3 && <div className={`w-10 md:w-16 h-0.5 ${step > s ? "bg-[#C9A962]" : "bg-gray-300"}`} />}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
-          <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="bg-white rounded-lg p-5 shadow-sm">
+          <motion.div key={step} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="bg-neutral-900 p-8 md:p-12">
             {step === 1 && (
               <>
-                <div className="flex items-center gap-2 mb-4"><Scissors className="w-5 h-5 text-[#C9A962]" /><h2 className="text-lg font-bold text-[#1A1A2E] font-heading">PILIH LAYANAN</h2></div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {services.map((s) => (
-                    <button key={s.id} onClick={() => toggle(s.id)} className={`p-3 rounded-lg border-2 text-left flex items-center justify-between ${svc.includes(s.id) ? "border-[#C9A962] bg-[#C9A962]/10" : "border-gray-200"}`}>
-                      <div><div className="font-bold text-[#1A1A2E] text-sm">{s.name}</div><div className="text-gray-500 text-xs">{s.time}</div></div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[#C9A962] font-bold text-sm">{fmt(s.price)}</span>
-                        <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${svc.includes(s.id) ? "border-[#C9A962] bg-[#C9A962]" : "border-gray-300"}`}>
-                          {svc.includes(s.id) && <Check className="w-3 h-3 text-white" />}
-                        </div>
+                <div className="flex items-center gap-3 mb-8">
+                  <Scissors className="text-gold" size={24} />
+                  <h2 className="text-2xl font-display font-bold">Choose Your Service</h2>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {services.map((service) => (
+                    <button
+                      key={service.id}
+                      onClick={() => setSelectedService(service.id)}
+                      className={`p-6 text-left transition-colors border ${selectedService === service.id ? "border-gold bg-gold/10" : "border-white/10 hover:border-white/30"}`}
+                    >
+                      <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-semibold">{service.name}</h3>
+                        <span className="text-gold font-display">Rp {service.price}</span>
                       </div>
+                      <p className="text-white/40 text-sm">{service.duration}</p>
                     </button>
                   ))}
                 </div>
@@ -99,13 +124,26 @@ export default function BookingPage() {
 
             {step === 2 && (
               <>
-                <div className="flex items-center gap-2 mb-4"><User className="w-5 h-5 text-[#C9A962]" /><h2 className="text-lg font-bold text-[#1A1A2E] font-heading">PILIH BARBER</h2></div>
-                <div className="grid grid-cols-2 gap-3">
-                  {barbers.map((b) => (
-                    <button key={b.id} onClick={() => setBarber(b.id)} className={`p-4 rounded-lg border-2 text-center ${barber === b.id ? "border-[#C9A962] bg-[#C9A962]/10" : "border-gray-200"}`}>
-                      <div className="w-12 h-12 mx-auto rounded-full bg-[#1A1A2E] flex items-center justify-center text-lg font-bold text-[#C9A962] font-heading mb-2">{b.name.split(" ").map((n) => n[0]).join("")}</div>
-                      <div className="font-bold text-[#1A1A2E] text-sm">{b.name}</div>
-                      <div className="text-gray-500 text-xs">{b.spec}</div>
+                <div className="flex items-center gap-3 mb-8">
+                  <User className="text-gold" size={24} />
+                  <h2 className="text-2xl font-display font-bold">Select Your Barber</h2>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4">
+                  {barbers.map((barber) => (
+                    <button
+                      key={barber.id}
+                      onClick={() => setSelectedBarber(barber.id)}
+                      className={`p-6 text-left transition-colors border ${selectedBarber === barber.id ? "border-gold bg-gold/10" : "border-white/10 hover:border-white/30"}`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="w-16 h-16 bg-neutral-800 flex items-center justify-center">
+                          <span className="text-2xl font-display font-bold text-white/20">{barber.name[0]}</span>
+                        </div>
+                        <div>
+                          <h3 className="font-semibold">{barber.name}</h3>
+                          <p className="text-white/40 text-sm">{barber.specialty}</p>
+                        </div>
+                      </div>
                     </button>
                   ))}
                 </div>
@@ -114,19 +152,38 @@ export default function BookingPage() {
 
             {step === 3 && (
               <>
-                <div className="flex items-center gap-2 mb-4"><Calendar className="w-5 h-5 text-[#C9A962]" /><h2 className="text-lg font-bold text-[#1A1A2E] font-heading">PILIH JADWAL</h2></div>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                    <input type="date" min={minDate} value={date} onChange={(e) => setDate(e.target.value)} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none" />
+                <div className="flex items-center gap-3 mb-8">
+                  <Calendar className="text-gold" size={24} />
+                  <h2 className="text-2xl font-display font-bold">Pick Date & Time</h2>
+                </div>
+                <div className="mb-8">
+                  <p className="text-white/60 text-sm uppercase tracking-wider mb-4">Select Date</p>
+                  <div className="grid grid-cols-7 gap-2">
+                    {dates.map((d) => (
+                      <button
+                        key={d.value}
+                        onClick={() => setSelectedDate(d.value)}
+                        className={`p-3 text-center transition-colors border ${selectedDate === d.value ? "border-gold bg-gold/10" : "border-white/10 hover:border-white/30"}`}
+                      >
+                        <p className="text-xs text-white/40 mb-1">{d.day}</p>
+                        <p className="font-semibold">{d.date}</p>
+                        <p className="text-xs text-white/40">{d.month}</p>
+                      </button>
+                    ))}
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Waktu</label>
-                    <div className="grid grid-cols-4 sm:grid-cols-6 gap-2">
-                      {times.map((t) => (
-                        <button key={t} onClick={() => setTime(t)} className={`p-2 rounded-lg border-2 text-sm font-medium ${time === t ? "border-[#C9A962] bg-[#C9A962] text-[#1A1A2E]" : "border-gray-200"}`}>{t}</button>
-                      ))}
-                    </div>
+                </div>
+                <div>
+                  <p className="text-white/60 text-sm uppercase tracking-wider mb-4">Select Time</p>
+                  <div className="flex flex-wrap gap-2">
+                    {timeSlots.map((time) => (
+                      <button
+                        key={time}
+                        onClick={() => setSelectedTime(time)}
+                        className={`px-5 py-3 transition-colors border ${selectedTime === time ? "border-gold bg-gold/10" : "border-white/10 hover:border-white/30"}`}
+                      >
+                        {time}
+                      </button>
+                    ))}
                   </div>
                 </div>
               </>
@@ -134,35 +191,70 @@ export default function BookingPage() {
 
             {step === 4 && (
               <>
-                <div className="flex items-center gap-2 mb-4"><Phone className="w-5 h-5 text-[#C9A962]" /><h2 className="text-lg font-bold text-[#1A1A2E] font-heading">DATA DIRI</h2></div>
-                <div className="space-y-3">
-                  <div><label className="block text-sm font-medium text-gray-700 mb-1">Nama *</label><input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none" placeholder="Nama lengkap" /></div>
-                  <div><label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp *</label><input type="tel" value={form.phone} onChange={(e) => setForm({ ...form, phone: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none" placeholder="08xx-xxxx-xxxx" /></div>
-                  <div><label className="block text-sm font-medium text-gray-700 mb-1">Email</label><input type="email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none" placeholder="email@contoh.com" /></div>
-                  <div><label className="block text-sm font-medium text-gray-700 mb-1">Catatan</label><textarea value={form.notes} onChange={(e) => setForm({ ...form, notes: e.target.value })} className="w-full p-2.5 border-2 border-gray-200 rounded-lg focus:border-[#C9A962] focus:outline-none" rows={2} placeholder="Catatan tambahan..." /></div>
+                <div className="flex items-center gap-3 mb-8">
+                  <Clock className="text-gold" size={24} />
+                  <h2 className="text-2xl font-display font-bold">Your Details</h2>
                 </div>
-                <div className="mt-4 p-4 bg-[#F5F5F5] rounded-lg text-sm">
-                  <div className="font-bold text-[#1A1A2E] mb-2">Ringkasan</div>
-                  <div className="space-y-1 text-gray-600">
-                    <div className="flex justify-between"><span>Layanan:</span><span className="text-right">{svc.map((id) => services.find((s) => s.id === id)?.name).join(", ")}</span></div>
-                    <div className="flex justify-between"><span>Barber:</span><span>{barbers.find((b) => b.id === barber)?.name}</span></div>
-                    <div className="flex justify-between"><span>Tanggal:</span><span>{date}</span></div>
-                    <div className="flex justify-between"><span>Waktu:</span><span>{time}</span></div>
-                    <div className="flex justify-between font-bold text-[#1A1A2E] pt-2 border-t border-gray-300 mt-2"><span>Total:</span><span className="text-[#C9A962]">{fmt(total)}</span></div>
+                <div className="space-y-6 mb-8">
+                  <div>
+                    <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Full Name</label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none"
+                      placeholder="Enter your name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-white/60 text-sm uppercase tracking-wider mb-2">Phone Number</label>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="w-full bg-neutral-800 border border-white/10 px-4 py-3 text-white focus:border-gold focus:outline-none"
+                      placeholder="08xxxxxxxxxx"
+                    />
+                  </div>
+                </div>
+                <div className="bg-neutral-800 p-6">
+                  <h3 className="text-gold uppercase tracking-wider text-sm mb-4">Booking Summary</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between"><span className="text-white/60">Service:</span><span>{services.find((s) => s.id === selectedService)?.name}</span></div>
+                    <div className="flex justify-between"><span className="text-white/60">Barber:</span><span>{barbers.find((b) => b.id === selectedBarber)?.name}</span></div>
+                    <div className="flex justify-between"><span className="text-white/60">Date:</span><span>{selectedDate}</span></div>
+                    <div className="flex justify-between"><span className="text-white/60">Time:</span><span>{selectedTime}</span></div>
+                    <div className="flex justify-between pt-2 border-t border-white/10 mt-2"><span className="text-white/60">Price:</span><span className="text-gold font-display text-lg">Rp {services.find((s) => s.id === selectedService)?.price}</span></div>
                   </div>
                 </div>
               </>
             )}
 
-            <div className="flex justify-between mt-6">
-              {step > 1 && <button onClick={() => setStep(step - 1)} className="px-4 py-2 border-2 border-[#1A1A2E] text-[#1A1A2E] rounded font-bold text-sm">Kembali</button>}
-              <div className="ml-auto">
-                {step < 4 ? (
-                  <button onClick={() => setStep(step + 1)} disabled={!canNext()} className={`px-4 py-2 rounded font-bold text-sm flex items-center gap-1 ${canNext() ? "bg-[#C9A962] text-[#1A1A2E]" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}>Lanjut <ChevronRight className="w-4 h-4" /></button>
-                ) : (
-                  <button onClick={submit} disabled={!canNext()} className={`px-5 py-2 rounded font-bold text-sm flex items-center gap-1 ${canNext() ? "bg-[#C9A962] text-[#1A1A2E]" : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}><Phone className="w-4 h-4" /> Booking via WhatsApp</button>
-                )}
-              </div>
+            <div className="flex justify-between mt-8 pt-8 border-t border-white/10">
+              {step > 1 ? (
+                <button onClick={prevStep} className="flex items-center gap-2 text-white/60 hover:text-white transition-colors">
+                  <ArrowLeft size={18} /> Back
+                </button>
+              ) : (
+                <div></div>
+              )}
+              {step < 4 ? (
+                <button
+                  onClick={nextStep}
+                  disabled={!canProceed()}
+                  className={`flex items-center gap-2 px-8 py-3 font-semibold uppercase tracking-wider text-sm transition-colors ${canProceed() ? "bg-gold text-black hover:bg-white" : "bg-neutral-800 text-white/30 cursor-not-allowed"}`}
+                >
+                  Continue <ArrowRight size={18} />
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmit}
+                  disabled={!canProceed()}
+                  className={`flex items-center gap-2 px-8 py-3 font-semibold uppercase tracking-wider text-sm transition-colors ${canProceed() ? "bg-gold text-black hover:bg-white" : "bg-neutral-800 text-white/30 cursor-not-allowed"}`}
+                >
+                  Book via WhatsApp <ArrowRight size={18} />
+                </button>
+              )}
             </div>
           </motion.div>
         </div>

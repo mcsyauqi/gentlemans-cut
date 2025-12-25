@@ -2,125 +2,128 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Check, Star, Award, Crown, Scissors } from "lucide-react";
+import { Check, ArrowRight } from "lucide-react";
+
+const memberships = [
+  {
+    name: "Silver",
+    price: "200.000",
+    period: "/bulan",
+    desc: "Perfect for regular grooming needs",
+    features: ["2 Haircuts per month", "10% off all services", "Priority booking", "Free styling products sample"],
+    popular: false,
+  },
+  {
+    name: "Gold",
+    price: "350.000",
+    period: "/bulan",
+    desc: "Our most popular choice",
+    features: ["4 Haircuts per month", "1 Free shave per month", "15% off all services", "Priority booking", "Free styling products", "Exclusive member events"],
+    popular: true,
+  },
+  {
+    name: "Platinum",
+    price: "500.000",
+    period: "/bulan",
+    desc: "The ultimate grooming experience",
+    features: ["Unlimited haircuts", "2 Free shaves per month", "20% off all services", "VIP priority booking", "Premium product kit monthly", "Private lounge access", "Complimentary beverages"],
+    popular: false,
+  },
+];
 
 const services = [
-  { name: "Haircut Classic", price: "Rp 75.000", desc: "Potong rambut klasik dengan finishing wax" },
-  { name: "Haircut Premium", price: "Rp 120.000", desc: "Include hair wash, massage, styling" },
-  { name: "Shaving Classic", price: "Rp 50.000", desc: "Cukur kumis/jenggot dengan pisau cukur" },
-  { name: "Hot Towel Shave", price: "Rp 100.000", desc: "Shaving mewah dengan handuk panas" },
-  { name: "Hair Coloring", price: "Rp 150.000", desc: "Pewarnaan rambut profesional" },
-  { name: "Kids Haircut", price: "Rp 50.000", desc: "Potong rambut anak (di bawah 12 tahun)" },
-  { name: "Beard Grooming", price: "Rp 80.000", desc: "Trim, shape, dan conditioning jenggot" },
-  { name: "Hair Treatment", price: "Rp 200.000", desc: "Perawatan rambut intensif" },
-];
-
-const addons = [
-  { name: "Hair Wash", price: "Rp 20.000" },
-  { name: "Scalp Massage", price: "Rp 30.000" },
-  { name: "Hair Tonic", price: "Rp 25.000" },
-  { name: "Beard Oil", price: "Rp 20.000" },
-  { name: "Hair Wax", price: "Rp 15.000" },
-  { name: "Face Mask", price: "Rp 35.000" },
-];
-
-const membership = [
-  { name: "Silver", price: "Rp 200.000", icon: <Star className="w-6 h-6" />, features: ["2x Haircut Classic/bulan", "Diskon 10% semua layanan", "Booking priority", "Birthday discount"], popular: false },
-  { name: "Gold", price: "Rp 350.000", icon: <Crown className="w-6 h-6" />, features: ["2x Haircut Premium/bulan", "1x Hot Towel Shave/bulan", "Diskon 15% semua layanan", "Priority booking", "Free product samples"], popular: true },
-  { name: "Platinum", price: "Rp 500.000", icon: <Award className="w-6 h-6" />, features: ["Unlimited Haircut/bulan", "2x Hot Towel Shave/bulan", "Diskon 20% semua layanan", "VIP room access", "Personal barber"], popular: false },
+  { category: "Haircuts", items: [{ name: "Classic Haircut", price: "75.000" }, { name: "Premium Haircut", price: "120.000" }, { name: "Kids Haircut", price: "50.000" }, { name: "Senior Haircut", price: "60.000" }] },
+  { category: "Shaves", items: [{ name: "Classic Shave", price: "50.000" }, { name: "Hot Towel Shave", price: "100.000" }, { name: "Beard Trim", price: "40.000" }, { name: "Beard Grooming", price: "80.000" }] },
+  { category: "Treatments", items: [{ name: "Hair Coloring", price: "150.000" }, { name: "Hair Treatment", price: "200.000" }, { name: "Scalp Treatment", price: "120.000" }, { name: "Hair & Beard Combo", price: "180.000" }] },
 ];
 
 export default function HargaPage() {
   return (
     <>
-      <section className="bg-[#1A1A2E] pt-24 pb-12">
-        <div className="max-w-6xl mx-auto px-4 text-center">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <h1 className="text-4xl md:text-5xl font-bold text-white font-heading">DAFTAR HARGA</h1>
-            <div className="w-16 h-1 bg-[#C9A962] mx-auto mt-3 mb-4"></div>
-            <p className="text-gray-300">Harga transparan untuk semua layanan grooming premium</p>
+      <section className="pt-32 pb-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl">
+            <p className="text-gold uppercase tracking-[0.3em] text-sm mb-3">Pricing</p>
+            <h1 className="text-5xl md:text-6xl font-display font-bold mb-6">Transparent Pricing</h1>
+            <p className="text-white/60 text-lg">Quality grooming at fair prices. No hidden fees, just premium service.</p>
           </motion.div>
         </div>
       </section>
 
-      <section className="py-12 bg-[#F5F5F5]">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A2E] font-heading text-center mb-2">LAYANAN</h2>
-          <div className="w-16 h-1 bg-[#C9A962] mx-auto mb-6"></div>
-          <div className="bg-white rounded-lg shadow-sm overflow-hidden">
-            {services.map((s, i) => (
-              <div key={s.name} className={`flex items-center justify-between p-4 ${i < services.length - 1 ? "border-b border-gray-100" : ""}`}>
-                <div className="flex items-center gap-3">
-                  <Scissors className="w-4 h-4 text-[#C9A962]" />
-                  <div>
-                    <div className="font-bold text-[#1A1A2E] text-sm">{s.name}</div>
-                    <div className="text-gray-500 text-xs">{s.desc}</div>
-                  </div>
-                </div>
-                <span className="text-lg font-bold text-[#C9A962]">{s.price}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-white">
-        <div className="max-w-3xl mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A2E] font-heading text-center mb-2">ADD-ONS</h2>
-          <div className="w-16 h-1 bg-[#C9A962] mx-auto mb-4"></div>
-          <p className="text-gray-600 text-center text-sm mb-6">Tambahan layanan untuk pengalaman lebih lengkap</p>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {addons.map((a) => (
-              <div key={a.name} className="bg-[#F5F5F5] rounded-lg p-3 text-center hover:bg-[#1A1A2E] hover:text-white group transition-colors">
-                <div className="text-sm font-medium">{a.name}</div>
-                <div className="text-[#C9A962] font-bold text-sm">{a.price}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-12 bg-[#1A1A2E]">
-        <div className="max-w-5xl mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-white font-heading text-center mb-2">PAKET MEMBERSHIP</h2>
-          <div className="w-16 h-1 bg-[#C9A962] mx-auto mb-4"></div>
-          <p className="text-gray-400 text-center text-sm mb-8">Hemat lebih banyak dengan menjadi member</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {membership.map((m) => (
-              <div key={m.name} className={`rounded-lg overflow-hidden ${m.popular ? "ring-2 ring-[#C9A962]" : ""}`}>
-                {m.popular && <div className="bg-[#8B0000] text-white text-xs font-bold text-center py-1">PALING POPULER</div>}
-                <div className={`p-5 h-full flex flex-col ${m.popular ? "bg-gradient-to-b from-[#C9A962] to-[#8B6914]" : "bg-white/5"}`}>
-                  <div className="text-center mb-4">
-                    <div className={`inline-flex p-2 rounded-full mb-2 ${m.popular ? "bg-[#1A1A2E]/20 text-[#1A1A2E]" : "bg-[#C9A962]/20 text-[#C9A962]"}`}>{m.icon}</div>
-                    <h3 className={`text-xl font-bold font-heading ${m.popular ? "text-[#1A1A2E]" : "text-white"}`}>{m.name} Member</h3>
-                    <div className="mt-1">
-                      <span className={`text-2xl font-bold ${m.popular ? "text-[#1A1A2E]" : "text-[#C9A962]"}`}>{m.price}</span>
-                      <span className={m.popular ? "text-[#1A1A2E]/70" : "text-gray-400"}>/bulan</span>
+      <section className="pb-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="mb-16">
+            <h2 className="text-3xl font-display font-bold mb-8">Membership Plans</h2>
+            <div className="grid md:grid-cols-3 gap-6">
+              {memberships.map((plan, i) => (
+                <motion.div
+                  key={plan.name}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className={`relative p-8 ${plan.popular ? "bg-gold text-black" : "bg-neutral-900"}`}
+                >
+                  {plan.popular && (
+                    <div className="absolute -top-3 left-8 bg-black text-gold px-4 py-1 text-xs uppercase tracking-wider font-semibold">
+                      Most Popular
                     </div>
+                  )}
+                  <h3 className="text-2xl font-display font-bold mb-2">{plan.name}</h3>
+                  <p className={`text-sm mb-6 ${plan.popular ? "text-black/70" : "text-white/50"}`}>{plan.desc}</p>
+                  <div className="flex items-baseline gap-1 mb-8">
+                    <span className="text-sm">Rp</span>
+                    <span className="text-5xl font-display font-bold">{plan.price}</span>
+                    <span className={`text-sm ${plan.popular ? "text-black/60" : "text-white/40"}`}>{plan.period}</span>
                   </div>
-                  <ul className="space-y-2 flex-1 mb-4">
-                    {m.features.map((f) => (
-                      <li key={f} className={`flex items-start gap-2 text-sm ${m.popular ? "text-[#1A1A2E]" : "text-gray-300"}`}>
-                        <Check className={`w-4 h-4 mt-0.5 ${m.popular ? "text-[#1A1A2E]" : "text-[#C9A962]"}`} /> {f}
+                  <ul className="space-y-3 mb-8">
+                    {plan.features.map((feature) => (
+                      <li key={feature} className="flex items-center gap-3">
+                        <Check size={16} className={plan.popular ? "text-black" : "text-gold"} />
+                        <span className={`text-sm ${plan.popular ? "text-black/80" : "text-white/70"}`}>{feature}</span>
                       </li>
                     ))}
                   </ul>
-                  <Link href="/booking" className={`block text-center py-2 rounded font-bold text-sm ${m.popular ? "bg-[#1A1A2E] text-white" : "border border-[#C9A962] text-[#C9A962] hover:bg-[#C9A962] hover:text-[#1A1A2E]"} transition-colors`}>
-                    Daftar Sekarang
+                  <Link
+                    href="/booking"
+                    className={`block text-center py-4 font-semibold uppercase tracking-wider text-sm transition-colors ${
+                      plan.popular ? "bg-black text-white hover:bg-neutral-800" : "bg-gold text-black hover:bg-white"
+                    }`}
+                  >
+                    Join Now
                   </Link>
-                </div>
-              </div>
-            ))}
+                </motion.div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h2 className="text-3xl font-display font-bold mb-8">Service Prices</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              {services.map((category, i) => (
+                <motion.div key={category.category} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}>
+                  <h3 className="text-gold uppercase tracking-wider text-sm font-semibold mb-6">{category.category}</h3>
+                  <div className="space-y-4">
+                    {category.items.map((item) => (
+                      <div key={item.name} className="flex items-center justify-between pb-4 border-b border-white/10">
+                        <span className="text-white/80">{item.name}</span>
+                        <span className="font-display text-lg">Rp {item.price}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="py-12 bg-[#F5F5F5]">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-[#1A1A2E] font-heading mb-3">SIAP UNTUK TAMPIL MAKSIMAL?</h2>
-          <p className="text-gray-600 mb-6">Booking sekarang dan nikmati layanan grooming premium</p>
-          <Link href="/booking" className="inline-flex items-center gap-2 bg-[#C9A962] text-[#1A1A2E] px-6 py-3 rounded font-bold hover:bg-[#b8983e] transition-colors">
-            <Scissors className="w-5 h-5" /> Booking Sekarang
+      <section className="py-16 bg-neutral-900">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">Ready to Look Your Best?</h2>
+          <p className="text-white/60 mb-8 max-w-md mx-auto">Book your appointment now and experience premium grooming.</p>
+          <Link href="/booking" className="inline-flex items-center gap-2 bg-gold text-black px-8 py-4 font-semibold uppercase tracking-wider hover:bg-white transition-colors">
+            Book Appointment <ArrowRight size={18} />
           </Link>
         </div>
       </section>
